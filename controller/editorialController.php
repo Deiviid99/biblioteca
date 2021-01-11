@@ -38,12 +38,16 @@ class Editorial
         //INSTANCIO LA CONEXION BD
         $con = Conexion();
         $idEditorial = $_POST['txtIdEditorial'];
-        $nombreEditorial = $_POST['txtNombreEditorialu'];
-        //EJECUTO PROCEDIMIENTO ALMACENADO
-        $sql = "CALL stp_modificareditorial('$idEditorial','$nombreEditorial')";
-        $result = mysqli_query($con, $sql);
-        if ($result) {
+        $nombreEditorial = trim($_POST['txtNombreEditorialu']);
+        if ($nombreEditorial == "") {
             echo "1";
+        } else {
+            //EJECUTO PROCEDIMIENTO ALMACENADO
+            $sql = "CALL stp_modificareditorial('$idEditorial','$nombreEditorial')";
+            $result = mysqli_query($con, $sql);
+            if ($result) {
+                echo "2";
+            }
         }
     }
 

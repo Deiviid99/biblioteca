@@ -1,17 +1,21 @@
 $(document).ready(function () {
     /*------------------AGREGAR EDITORIAL-------------------*/
-    $('#txtNombreEditorial').keyup(editorialNombreAgregar);
+    $('#txtNombreEditorial').keyup(editorialAgregar);
     /*------------------MODIFICAR EDITORIAL-------------------*/
-    $('#txtNombreEditorialu').keyup(editorialNombreModificar);
+    $('#txtNombreEditorialu').keyup(editorialModificar);
 
     /*------------------AGREGAR AUTOR-------------------*/
     $('#txtNombreAutor').keyup(autorAgregar);
     $('#txtApellidoAutor').keyup(autorAgregar);
+    /*------------------MODIFICAR AUTOR-------------------*/
+    $('#txtNombreAutoru').keyup(autorModificar);
+    $('#txtApellidoAutoru').keyup(autorModificar);
+
 });
 
 /*-----------------FUNCIONES VALIDAR-----------------*/
 
-function editorialNombreAgregar() {
+function editorialAgregar() {
     var nombre = $('#txtNombreEditorial').val();
     var inputNombre = document.getElementById('txtNombreEditorial');
     var mensaje = document.getElementById('mensajeEditorial');
@@ -60,35 +64,54 @@ function editorialNombreAgregar() {
 
 }
 
-function editorialNombreModificar() {
+function editorialModificar() {
     var nombre = $('#txtNombreEditorialu').val();
     var inputNombre = document.getElementById('txtNombreEditorialu');
     var mensaje = document.getElementById('mensajeEditorialu');
     var actualizar = document.getElementById('btnActualizarEditorial');
-    if (nombre.length > 0) {
-        if (nombre.trim() === "" || nombre.trim() === null) {
+    var valor = false;
+    actualizar.disabled = true;
+
+    if (nombre.trim() == "") {
+        //INCORRECTO
+        actualizar.disabled = true;
+        mensaje.hidden = false;
+        inputNombre.style.border = '1px solid transparent';
+        inputNombre.style.borderColor = '#DE0F0F';
+        inputNombre.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensaje.innerHTML = "*Campo obligatorio";
+        valor = false;
+    } else {
+        //CORRECTO
+        inputNombre.style.border = '1px solid transparent';
+        inputNombre.style.borderColor = '#1cc88a';
+        inputNombre.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensaje.hidden = true;
+        valor = true;
+        if (nombre.length > 50) {
+            //INCORRECTO
             actualizar.disabled = true;
             mensaje.hidden = false;
             inputNombre.style.border = '1px solid transparent';
             inputNombre.style.borderColor = '#DE0F0F';
             inputNombre.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
-
-            mensaje.innerHTML = "*Campo obligatorio";
+            mensaje.innerHTML = "El nombre es muy extenso (Máximo 50 caracteres)";
+            valor = false;
         } else {
+            //CORRECTO
             inputNombre.style.border = '1px solid transparent';
             inputNombre.style.borderColor = '#1cc88a';
             inputNombre.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
             mensaje.hidden = true;
-            actualizar.disabled = false;
+            valor = true;
         }
-    } else {
-        inputNombre.style.border = '';
-        inputNombre.style.borderColor = '';
-        inputNombre.style.boxShadow = '';
-        mensaje.hidden = true;
-        actualizar.disabled = true;
+    }
+
+    if (valor == true) {
+        actualizar.disabled = false;
     }
 }
+
 
 function autorAgregar() {
     var nombre = $('#txtNombreAutor').val();
@@ -179,6 +202,99 @@ function autorAgregar() {
 
     if (valorNombre == true && valorApellido == true) {
         guardar.disabled = false;
+    }
+
+}
+
+function autorModificar() {
+    var nombre = $('#txtNombreAutoru').val();
+    var apellido = $('#txtApellidoAutoru').val();
+    var inputNombre = document.getElementById('txtNombreAutoru');
+    var inputApellido = document.getElementById('txtApellidoAutoru');
+    var mensajeNombre = document.getElementById('mensajeNombreAutoru');
+    var mensajeApellido = document.getElementById('mensajeApellidoAutoru');
+    var actualizar = document.getElementById('btnActualizarAutor');
+    var valorNombre = false;
+    var valorApellido = false;
+
+    actualizar.disabled = true;
+
+    if (nombre.trim() == "") {
+        //INCORRECTO
+        actualizar.disabled = true;
+        mensajeNombre.hidden = false;
+        inputNombre.style.border = '1px solid transparent';
+        inputNombre.style.borderColor = '#DE0F0F';
+        inputNombre.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensajeNombre.innerHTML = "*Campo obligatorio";
+        valorNombre = false;
+    } else {
+        //CORRECTO
+        actualizar.disabled = true;
+        inputNombre.style.border = '1px solid transparent';
+        inputNombre.style.borderColor = '#1cc88a';
+        inputNombre.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensajeNombre.hidden = true;
+        valorNombre = true;
+        if (nombre.length > 50) {
+            //INCORRECTO
+            actualizar.disabled = true;
+            mensajeNombre.hidden = false;
+            inputNombre.style.border = '1px solid transparent';
+            inputNombre.style.borderColor = '#DE0F0F';
+            inputNombre.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+            mensajeNombre.innerHTML = "El nombre es muy extenso (Máximo 50 caracteres)";
+            valorNombre = false;
+        } else {
+            //CORRECTO
+            actualizar.disabled = true;
+            inputNombre.style.border = '1px solid transparent';
+            inputNombre.style.borderColor = '#1cc88a';
+            inputNombre.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+            mensajeNombre.hidden = true;
+            valorNombre = true;
+        }
+    }
+
+    if (apellido.trim() == "") {
+        //INCORRECTO
+        actualizar.disabled = true;
+        mensajeApellido.hidden = false;
+        inputApellido.style.border = '1px solid transparent';
+        inputApellido.style.borderColor = '#DE0F0F';
+        inputApellido.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensajeApellido.innerHTML = "*Campo obligatorio";
+        valorApellido = false;
+    } else {
+        //CORRECTO
+        actualizar.disabled = true;
+        inputApellido.style.border = '1px solid transparent';
+        inputApellido.style.borderColor = '#1cc88a';
+        inputApellido.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensajeApellido.hidden = true;
+        valorApellido = true;
+        if (apellido.length > 50) {
+            //INCORRECTO
+            actualizar.disabled = true;
+            mensajeApellido.hidden = false;
+            inputApellido.style.border = '1px solid transparent';
+            inputApellido.style.borderColor = '#DE0F0F';
+            inputApellido.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+            mensajeApellido.innerHTML = "El apellido es muy extenso (Máximo 50 caracteres)";
+            valorApellido = false;
+        } else {
+            //CORRECTO
+            actualizar.disabled = true;
+            inputApellido.style.border = '1px solid transparent';
+            inputApellido.style.borderColor = '#1cc88a';
+            inputApellido.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+            mensajeApellido.hidden = true;
+            valorApellido = true;
+        }
+    }
+
+    if (valorNombre == true && valorApellido == true) {
+        actualizar.disabled = false;
     }
 
 }

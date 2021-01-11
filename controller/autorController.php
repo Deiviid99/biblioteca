@@ -42,11 +42,15 @@ class Autor
         $idAutor = $_POST['txtIdAutor'];
         $nombreAutor = trim($_POST['txtNombreAutoru']);
         $apellidoAutor = trim($_POST['txtApellidoAutoru']);
-        //EJECUTO PROCEDIMIENTO ALMACENADO
-        $sql = "CALL stp_modificarautor('$idAutor','$nombreAutor', '$apellidoAutor')";
-        $result = mysqli_query($con, $sql);
-        if ($result) {
+        if ($nombreAutor == "" || $apellidoAutor == "") {
             echo "1";
+        } else {
+            //EJECUTO PROCEDIMIENTO ALMACENADO
+            $sql = "CALL stp_modificarautor('$idAutor','$nombreAutor', '$apellidoAutor')";
+            $result = mysqli_query($con, $sql);
+            if ($result) {
+                echo "2";
+            }
         }
     }
 

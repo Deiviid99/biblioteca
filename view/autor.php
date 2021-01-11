@@ -92,9 +92,11 @@
                     <input type="hidden" class="form-control" name="txtIdAutor" id="txtIdAutor" />
                     <label for="txtNombreAutoru" class="titulos_formularios">Nombres: </label>
                     <input type="text" class="form-control" name="txtNombreAutoru" id="txtNombreAutoru" />
+                    <div id="mensajeNombreAutoru" style="color: #DE0F0F; font-size: 12px;"></div>
                     <br>
                     <label for="txtApellidoAutoru" class="titulos_formularios">Apellidos: </label>
                     <input type="text" class="form-control" name="txtApellidoAutoru" id="txtApellidoAutoru" />
+                    <div id="mensajeApellidoAutoru" style="color: #DE0F0F; font-size: 12px;"></div>
                 </div>
                 <div class="modal-footer" style="background-color: #F9F9F9;">
                     <button type="button" class="btn btn-outline-success" data-dismiss="modal" name="btnActualizarAutor" id="btnActualizarAutor">Actualizar <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">

@@ -114,33 +114,28 @@ $(document).ready(function () {
     });
     //MODIFICAR EDITORIAL
     $('#btnActualizarEditorial').click(function () {
-        var nombreEditorial = $('#txtNombreEditorialu').val().trim();
-        var mensajeEditorial = document.getElementById('mensajeEditorialu');
-        mensajeEditorial.style.color = 'red';
-        mensajeEditorial.style.fontSize = '12px';
-        if (nombreEditorial === null || nombreEditorial === '') {
-            mensajeEditorial.innerHTML = "*Campo obligatorio";
-            return false;
-        } else {
-            mensajeEditorial.style.display = "none";
-            var datos = $('#frmModificarEditorial').serialize();
-            alertify.set('notifier', 'position', 'top-right');
-            $.ajax({
-                type: "POST",
-                url: "../controller/editorialController.php?edit=editorial",
-                data: datos,
-                success: function (data) {
-                    if (data == "1") {
-                        alertify.success("Actualización exitosa")
-                        $("#modalModificarEditorial").modal('hide');
-                        $('#tablaEditorial').load('http://192.168.1.33:82/biblioteca/view/tablaeditorial.php');
-                    } else {
-                        alertify.error("Error de actualización");
-                    }
+
+        var datos = $('#frmModificarEditorial').serialize();
+        alertify.set('notifier', 'position', 'top-right');
+        $.ajax({
+            type: "POST",
+            url: "../controller/editorialController.php?edit=editorial",
+            data: datos,
+            success: function (data) {
+                if (data == "1") {
+                    alertify.warning("El campo no se puede actualizar vacío.");
+                } else if (data == "2") {
+                    alertify.success("Actualización exitosa")
+                    $("#modalModificarEditorial").modal('hide');
+                    $('#tablaEditorial').load('http://192.168.1.33:82/biblioteca/view/tablaeditorial.php');
+                    limpiarCamposModificarEditorial();
+                } else {
+                    alertify.error("Error de actualización");
                 }
-            });
-            return false;
-        }
+            }
+        });
+        return false;
+
     });
 
     //GUARDAR AUTOR
@@ -178,9 +173,12 @@ $(document).ready(function () {
             data: datos,
             success: function (data) {
                 if (data == "1") {
+                    alertify.warning("Los campos no se pueden actualizar vacíos.");
+                } else if (data == "2") {
                     alertify.success("Actualización exitosa")
                     $("#modalModificarAutor").modal('hide');
                     $('#tablaAutor').load('http://192.168.1.33:82/biblioteca/view/tablaautor.php');
+                    limpiarCamposModificarAutor();
                 } else {
                     alertify.error("Error de actualización");
                 }
@@ -473,6 +471,29 @@ function eliminarLibroAutor(idLibro, idAutor) {
 
 
 /*------------------LIMPIAR CAMPOS FORMULARIOS VALIDADOS------------------*/
+
+function limpiarCamposAgregarEditorial() {
+    var inputNombre = document.getElementById('txtNombreEditorial');
+    var mensaje = document.getElementById('mensajeEditorial');
+
+    inputNombre.style.border = '';
+    inputNombre.style.borderColor = '';
+    inputNombre.style.boxShadow = '';
+    mensaje.hidden = true;
+
+}
+
+function limpiarCamposModificarEditorial() {
+    var inputNombre = document.getElementById('txtNombreEditorialu');
+    var mensaje = document.getElementById('mensajeEditorialu');
+
+    inputNombre.style.border = '';
+    inputNombre.style.borderColor = '';
+    inputNombre.style.boxShadow = '';
+    mensaje.hidden = true;
+
+}
+
 function limpiarCamposAgregarAutor() {
     var inputNombre = document.getElementById('txtNombreAutor');
     var inputApellido = document.getElementById('txtApellidoAutor');
@@ -489,13 +510,18 @@ function limpiarCamposAgregarAutor() {
     inputApellido.style.boxShadow = '';
 }
 
-function limpiarCamposAgregarEditorial() {
-    var inputNombre = document.getElementById('txtNombreEditorial');
-    var mensaje = document.getElementById('mensajeEditorial');
+function limpiarCamposModificarAutor() {
+    var inputNombre = document.getElementById('txtNombreAutoru');
+    var inputApellido = document.getElementById('txtApellidoAutoru');
+    var mensajeNombre = document.getElementById('mensajeNombreAutoru');
+    var mensajeApellido = document.getElementById('mensajeApellidoAutoru');
 
     inputNombre.style.border = '';
     inputNombre.style.borderColor = '';
     inputNombre.style.boxShadow = '';
-    mensaje.hidden = true;
-
+    mensajeNombre.hidden = true;
+    mensajeApellido.hidden = true;
+    inputApellido.style.border = '';
+    inputApellido.style.borderColor = '';
+    inputApellido.style.boxShadow = '';
 }
