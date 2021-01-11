@@ -18,17 +18,10 @@ if (isset($_SESSION["rol"]) && $_SESSION["rol"] == 1) {
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <a class="nav-link collapsed" href="usuario.php" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-user"></i>
                 <span>Usuarios</span>
             </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Nuevo usuario</a>
-                    <a class="collapse-item" href="#">Lista de usuarios</a>
-                    <div class="collapse-divider"></div>
-                </div>
-            </div>
         </li>
 
         <!-- Nav Item - Pages Collapse Menu -->

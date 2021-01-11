@@ -207,8 +207,8 @@ $(document).ready(function () {
     $('#tablaAutor').load('http://192.168.1.33:82/biblioteca/view/tablaautor.php');
     //OBTENER TABLA DE LIBROS
     $('#tablaLibro').load('http://192.168.1.33:82/biblioteca/view/tablalibro.php');
-    //OBTENER TABLA DE LIBROS
-    $('#tablaPrueba').load('http://192.168.1.33:82/biblioteca/view/tablaprueba.php');
+    //OBTENER TABLA DE USUARIOS
+    $('#tablaUsuario').load('http://192.168.1.33:82/biblioteca/view/tablausuario.php');
 
 
     //GUARDAR LIBRO
@@ -350,6 +350,66 @@ $(document).ready(function () {
         return false;
     });
 
+
+    //GUARDAR USUARIOS
+    $('#btnGuardarUsuario').click(function () {
+        var datos = $('#frmAgregarUsuario').serialize();
+        alertify.set('notifier', 'position', 'top-right');
+        $.ajax({
+            type: "POST",
+            url: "../controller/usuarioController.php?add=usuario",
+            data: datos,
+            success: function (data) {
+                if (data == "1") {
+                    alertify.warning("El correo ingresado ya se encuentra registrado en nuestro sistema.");
+                } else if (data == "2") {
+                    alertify.success("Registro exitoso");
+                    $("#modalAgregarUsuario").modal('hide');
+                    $('#tablaUsuario').load('http://192.168.1.33:82/biblioteca/view/tablausuario.php');
+                    document.getElementById("frmAgregarUsuario").reset();
+                } else if (data == "3") {
+                    alertify.warning("No se pueden registrar datos vacíos.");
+                }
+                else {
+                    alertify.error("Error de registro");
+                }
+            }
+        });
+        return false;
+    });
+
+    //MODIFICAR USUARIOS
+    $('#btnActualizarUsuario').click(function () {
+        var datos = $('#frmModificarUsuario').serialize();
+        alertify.set('notifier', 'position', 'top-right');
+        $.ajax({
+            type: "POST",
+            url: "../controller/usuarioController.php?edit=usuario",
+            data: datos,
+            success: function (data) {
+                if (data == "1") {
+                    alertify.alert("Información", "El registro se lo ha realizado, sin tomar en cuenta el correo, ya que se encuentra registrado en nuestro sistema.");
+                    alertify.success("Actualización exitosa");
+                    $("#modalModificarUsuario").modal('hide');
+                    $('#tablaUsuario').load('http://192.168.1.33:82/biblioteca/view/tablausuario.php');
+                    document.getElementById("frmModificarUsuario").reset();
+                } else if (data == "2") {
+                    alertify.success("Actualización exitosa");
+                    $("#modalModificarUsuario").modal('hide');
+                    $('#tablaUsuario').load('http://192.168.1.33:82/biblioteca/view/tablausuario.php');
+                    document.getElementById("frmModificarUsuario").reset();
+                } else if (data == "3") {
+                    alertify.warning("No se pueden actualizar datos vacíos.");
+                }
+                else {
+                    alertify.error("Error de actualización");
+                }
+
+            }
+        });
+        return false;
+    });
+
 });
 
 /*------------------FUNCIONES RELACIONADAS AL CRUD---------------*/
@@ -385,6 +445,20 @@ function obtenerDatosActualizarLibroPVP(datos) {
     $('#txtIdPVPLibro').val(d[0]);
     $('#txtPVPLibro').val(d[1]);
 }
+//CAPTURAR DATOS PARA IMPRIMIRLOS EN EL FORM AUTOR
+function obtenerDatosActualizarUsuario(datos) {
+    d = datos.split('||');
+    $('#txtIdUsuario').val(d[0]);
+    $('#txtNombreu').val(d[1]);
+    $('#txtApellidou').val(d[2]);
+    $('#txtCorreou').val(d[3]);
+    $('#txtPasswordu').val(d[4]);
+    $('#txtIdentificacionu').val(d[5]);
+    $('#txtTelefonou').val(d[6]);
+    $('#txtDireccionu').val(d[7]);
+    $('#cmbRolu').val(d[8]);
+}
+
 
 //ELIMINAR EDITORIAL
 function eliminarEditorial(id) {
@@ -410,6 +484,7 @@ function eliminarEditorial(id) {
         },
         function () { });
 }
+
 //ELIMINAR AUTOR
 function eliminarAutor(id) {
     alertify.set('notifier', 'position', 'top-right');
@@ -459,7 +534,6 @@ function eliminarLibro(id) {
         },
         function () { });
 }
-
 //ELIMINAR LIBRO AUTOR
 function eliminarLibroAutor(idLibro, idAutor) {
     var directorio = "http://192.168.1.33:82/biblioteca";
@@ -478,6 +552,30 @@ function eliminarLibroAutor(idLibro, idAutor) {
                         alertify.alert("Información", "Se ha eliminado un registro.", function () { window.location = directorio + "/view/mantenimiento.php?libro=" + idLibro; });
                     } else if (data == "2") {
                         alertify.alert("Información", "Se ha eliminado el último registro, por tanto, el libro se ha eliminado por completo.", function () { window.location = directorio + "/view/libro.php"; });
+                    } else {
+                        alertify.error("Error de eliminado");
+                    }
+                }
+            });
+        },
+        function () { });
+}
+
+
+//ELIMINAR EDITORIAL
+function eliminarUsuario(id) {
+    alertify.set('notifier', 'position', 'top-right');
+    alertify.confirm('Eliminar Usuario', '¿Está seguro/a de eliminar este usuario?',
+        function () {
+            datos = "idUsuario=" + id;
+            $.ajax({
+                type: "POST",
+                url: "../controller/usuarioController.php?delete=usuario",
+                data: datos,
+                success: function (data) {
+                    if (data == "1") {
+                        $('#tablaUsuario').load('http://192.168.1.33:82/biblioteca/view/tablausuario.php');
+                        alertify.success("Eliminado exitoso")
                     } else {
                         alertify.error("Error de eliminado");
                     }
