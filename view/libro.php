@@ -59,7 +59,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <label for="" class="titulos_formularios">Editorial: </label>
+                            <label for="cmbEditorial" class="titulos_formularios">Editorial: </label>
                             <select class="form-control" name="cmbEditorial" id="cmbEditorial">
                                 <option value="0">Seleccione una editorial</option>
                                 <?php
@@ -69,36 +69,41 @@
                                     <option value="<?php echo $row["EDI_ID"]; ?>"><?php echo $row["EDI_NOMBRE"] ?></option>
                                 <?php } ?>
                             </select>
+                            <div id="mensajeEditorialLibro" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                         <div class="col">
-                            <label for="" class="titulos_formularios">ISBN: </label>
+                            <label for="txtIsbn" class="titulos_formularios">ISBN: </label>
                             <input type="text" class="form-control" name="txtIsbn" id="txtIsbn" placeholder="Ingrese el ISBN del libro..." />
+                            <div id="mensajeIsbn" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                     </div>
                     <hr>
                     <div>
-                        <label for="" class="titulos_formularios">Título: </label>
+                        <label for="txtTitulo" class="titulos_formularios">Título: </label>
                         <input type="text" class="form-control" name="txtTitulo" id="txtTitulo" placeholder="Ingrese el título del libro..." />
+                        <div id="mensajeTitulo" style="color: #DE0F0F; font-size: 12px;"></div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col">
-                            <label for="" class="titulos_formularios">Año: </label>
+                            <label for="txtAnio" class="titulos_formularios">Año: </label>
                             <input type="text" class="form-control" name="txtAnio" id="txtAnio" placeholder="Ingrese el año del libro..." />
+                            <div id="mensajeAnio" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                         <div class="col">
-                            <label for="" class="titulos_formularios">$P.V.P: </label>
+                            <label for="txtPrecioVenta" class="titulos_formularios">$P.V.P: </label>
                             <div class="input-group mb-2">
                                 <div class="input-group-addon">
                                     $
                                 </div>
                                 <input type="text" class="form-control" name="txtPrecioVenta" id="txtPrecioVenta" placeholder="0.00" />
                             </div>
+                            <div id="mensajePVP" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                     </div>
                     <hr>
                     <div class="form-group">
-                        <label for="" class="titulos_formularios">Autor: </label>
+                        <label for="" class="titulos_formularios">Autor(es): </label>
                         <br>
                         <select multiple class="form-control" name="cmbAutores[]" id="cmbAutores">
                             <?php
@@ -108,6 +113,7 @@
                                 <option value="<?php echo $row["AUT_ID"]; ?>"><?php echo $row["AUT_NOMBRE"] . " " . $row["AUT_APELLIDO"] ?></option>
                             <?php } ?>
                         </select>
+                        <div id="mensajeAutor" style="color: #DE0F0F; font-size: 12px;"></div>
                     </div>
                 </div>
                 <div class="modal-footer" style="background-color: #F9F9F9;">
@@ -189,7 +195,7 @@
                                 <div class="input-group-addon">
                                     %
                                 </div>
-                                <input type="text" class="form-control" name="txtPorcentajePVPLibro" id="txtPorcentajePVPLibro" />
+                                <input type="text" class="form-control" name="txtPorcentajePVPLibro" id="txtPorcentajePVPLibro" placeholder="0.00"/>
                             </div>
                         </div>
                         <div class="col">

@@ -1,4 +1,7 @@
-<?php require_once("../controller/libroController.php"); ?>
+<?php
+require_once("../controller/libroController.php");
+require_once("../controller/helperController.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +32,7 @@
                 <div class="container-fluid">
 
                     <?php
-                    $idLibro = $_GET['libro'];
+                    $idLibro = desencriptar($_GET['libro']);
                     ?>
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex flex-row align-items-center justify-content-between">

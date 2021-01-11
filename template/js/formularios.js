@@ -190,7 +190,7 @@ $(document).ready(function () {
 
     //CARGAR LA SELECCION DE AUTORES AL MULTISELECT
     $('#cmbAutores').multiselect({
-        nonSelectedText: 'Seleccione uno/varios autores',
+        nonSelectedText: 'Seleccione autor(es)',
         enableFiltering: true,
         enableCaseInsensitiveFiltering: true,
         includeSelectAllOption: true,
@@ -217,9 +217,12 @@ $(document).ready(function () {
             data: datos,
             success: function (data) {
                 if (data == "1") {
+                    alertify.warning("Los campos no se pueden guardar vacíos.");
+                } else if (data == "2") {
                     alertify.success("Guardado exitoso")
                     $("#modalAgregarLibro").modal('hide');
                     $('#tablaLibro').load('http://192.168.1.33:82/biblioteca/view/tablalibro.php');
+                    limpiarCamposAgregarLibro();
                     document.getElementById("frmAgregarLibro").reset();
                 } else {
                     alertify.error("Error de guardado");
@@ -524,4 +527,50 @@ function limpiarCamposModificarAutor() {
     inputApellido.style.border = '';
     inputApellido.style.borderColor = '';
     inputApellido.style.boxShadow = '';
+}
+
+function limpiarCamposAgregarLibro() {
+    var inputEditorial = document.getElementById('cmbEditorial');
+    var inputIsbn = document.getElementById('txtIsbn');
+    var inputTitulo = document.getElementById('txtTitulo');
+    var inputAnio = document.getElementById('txtAnio');
+    var inputPrecioventa = document.getElementById('txtPrecioVenta');
+    var inputAutor = document.getElementById('cmbAutores');
+    var mensajeEditorial = document.getElementById('mensajeEditorialLibro');
+    var mensajeIsbn = document.getElementById('mensajeIsbn');
+    var mensajeTitulo = document.getElementById('mensajeTitulo');
+    var mensajeAnio = document.getElementById('mensajeAnio');
+    var mensajePVP = document.getElementById('mensajePVP');
+    var mensajeAutor = document.getElementById('mensajeAutor');
+
+    mensajeEditorial.hidden = true;
+    inputEditorial.style.border = '';
+    inputEditorial.style.borderColor = '';
+    inputEditorial.style.boxShadow = '';
+
+    mensajeIsbn.hidden = true;
+    inputIsbn.style.border = '';
+    inputIsbn.style.borderColor = '';
+    inputIsbn.style.boxShadow = '';
+
+    mensajeTitulo.hidden = true;
+    inputTitulo.style.border = '';
+    inputTitulo.style.borderColor = '';
+    inputTitulo.style.boxShadow = '';
+
+    mensajeAnio.hidden = true;
+    inputAnio.style.border = '';
+    inputAnio.style.borderColor = '';
+    inputAnio.style.boxShadow = '';
+
+    mensajePVP.hidden = true;
+    inputPrecioventa.style.border = '';
+    inputPrecioventa.style.borderColor = '';
+    inputPrecioventa.style.boxShadow = '';
+
+    mensajeAutor.hidden = true;
+    inputAutor.style.border = '';
+    inputAutor.style.borderColor = '';
+    inputAutor.style.boxShadow = '';
+
 }

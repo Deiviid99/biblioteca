@@ -17,24 +17,29 @@ class Libro
     {
         $con = Conexion();
         $editorial = $_POST['cmbEditorial'];
-        $isbn = $_POST['txtIsbn'];
-        $titulo = $_POST['txtTitulo'];
-        $anio = $_POST['txtAnio'];
-        $precioventa = $_POST['txtPrecioVenta'];
+        $isbn = trim($_POST['txtIsbn']);
+        $titulo = trim($_POST['txtTitulo']);
+        $anio = trim($_POST['txtAnio']);
+        $precioventa = trim($_POST['txtPrecioVenta']);
         $autor = $_POST['cmbAutores'];
 
-        $sql = "CALL stp_registrarlibro('$editorial','$isbn','$titulo','$anio','$precioventa')";
-        $result = mysqli_query($con, $sql);
-        $con->close();
-        if ($result) {
-            $con = Conexion();
-            foreach ($autor as $idautor) {
-                $sqlAutorlibro = "CALL stp_registrarautorlibro('$idautor')";
-                $resultAutorLibro = mysqli_query($con, $sqlAutorlibro);
-            }
+        if ($editorial == "" || $editorial == "0" || $isbn == "" || $titulo == "" || $anio == "" || $precioventa == "") {
+            echo "1";
+        } else {
+            //EJECUTO PROCEDIMIENTO ALMACENADO
+            $sql = "CALL stp_registrarlibro('$editorial','$isbn','$titulo','$anio','$precioventa')";
+            $result = mysqli_query($con, $sql);
             $con->close();
-            if ($resultAutorLibro) {
-                echo "1";
+            if ($result) {
+                $con = Conexion();
+                foreach ($autor as $idautor) {
+                    $sqlAutorlibro = "CALL stp_registrarautorlibro('$idautor')";
+                    $resultAutorLibro = mysqli_query($con, $sqlAutorlibro);
+                }
+                $con->close();
+                if ($resultAutorLibro) {
+                    echo "2";
+                }
             }
         }
     }
@@ -68,10 +73,10 @@ class Libro
         $libro = $_POST['txtIdLibro'];
         $autor = $_POST['cmbAutoresu'];
         $editorial = $_POST['cmbEditorialu'];
-        $isbn = $_POST['txtIsbnu'];
-        $titulo = $_POST['txtTitulou'];
-        $anio = $_POST['txtAniou'];
-        $precioventa = $_POST['txtPrecioVentau'];
+        $isbn = trim($_POST['txtIsbnu']);
+        $titulo = trim($_POST['txtTitulou']);
+        $anio = trim($_POST['txtAniou']);
+        $precioventa = trim($_POST['txtPrecioVentau']);
 
         $sqlValidar = "CALL stp_validar_autorlibro('$autor','$libro')";
         $resultValidar = mysqli_query($con, $sqlValidar);
@@ -132,7 +137,7 @@ class Libro
     function actualizarPVP()
     {
         $con = Conexion();
-        $porcentaje = $_POST['txtPorcentajePVP'];
+        $porcentaje = trim($_POST['txtPorcentajePVP']);
         $opcion = $_POST['chkOpcion'];
 
         $sql = "CALL stp_obtener_libros()";
@@ -190,7 +195,7 @@ class Libro
 
     function actualizarPVPLibro()
     {
-        $porcentaje = $_POST['txtPorcentajePVPLibro'];
+        $porcentaje = trim($_POST['txtPorcentajePVPLibro']);
         $pvpLibro = $_POST['txtPVPLibro'];
         $idPVPLibro = $_POST['txtIdPVPLibro'];
         $opcion = $_POST['chkOpcionLibro'];
