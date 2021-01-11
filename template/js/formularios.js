@@ -243,14 +243,17 @@ $(document).ready(function () {
             data: datos,
             success: function (data) {
                 if (data == "1") {
-                    alertify.success("Actualización exitosa")
-                    $("#modalModificarLibro").modal('hide');
-                    alertify.alert("Información", "La actualización se la realizó sin considerar el autor, el cual ya existe en el libro.", function () { window.location = directorio + "/view/mantenimiento.php?libro=" + idLibro; });
+                    alertify.warning("Los campos no se pueden actualizar vacíos.");
                 } else if (data == "2") {
                     alertify.success("Actualización exitosa")
                     $("#modalModificarLibro").modal('hide');
+                    alertify.alert("Información", "La actualización se la realizó sin considerar el autor, el cual ya existe en el libro.", function () { window.location = directorio + "/view/mantenimiento.php?libro=" + idLibro; });
+                    limpiarCamposModificarLibro();
+                } else if (data == "3") {
+                    alertify.success("Actualización exitosa")
+                    $("#modalModificarLibro").modal('hide');
                     alertify.alert("Información", "Se ha actualizado el registro.", function () { window.location = directorio + "/view/mantenimiento.php?libro=" + idLibro; });
-
+                    limpiarCamposModificarLibro();
                 } else {
                     alertify.error("Error de actualización");
                 }
@@ -297,11 +300,15 @@ $(document).ready(function () {
                     alertify.success("Cambio exitoso")
                     $("#modalCambiarPVP").modal('hide');
                     $('#tablaLibro').load('http://192.168.1.33:82/biblioteca/view/tablalibro.php');
+                    limpiarCamposPVPGeneral();
                     document.getElementById("frmModificarPVP").reset();
                 } else if (data == "2") {
                     alertify.alert("Información", "No se puede aplicar el cambio, porque no existen registros de libros.");
                 } else if (data == "3") {
                     alertify.alert("Información", "No se puede aplicar el cambio, porque el P.V.P no puede ser inferior a cero.");
+                }
+                else if (data == "4") {
+                    alertify.warning("El porcentaje no se puede aplicar, por favor revise el dato ingresado.");
                 }
                 else {
                     alertify.error("Error de cambio");
@@ -323,9 +330,12 @@ $(document).ready(function () {
                     alertify.success("Cambio exitoso")
                     $("#modalCambiarPVPLibro").modal('hide');
                     $('#tablaLibro').load('http://192.168.1.33:82/biblioteca/view/tablalibro.php');
+                    limpiarCamposPVPEspecifico();
                     document.getElementById("frmModificarPVPLibro").reset();
                 } else if (data == "2") {
                     alertify.alert("Información", "No se puede aplicar el cambio, porque el P.V.P no puede ser inferior a cero.");
+                } else if (data == "4") {
+                    alertify.warning("El porcentaje no se puede aplicar, por favor revise el dato ingresado.");
                 }
                 else {
                     alertify.error("Error de cambio");
@@ -573,5 +583,73 @@ function limpiarCamposAgregarLibro() {
     inputAutor.style.border = '';
     inputAutor.style.borderColor = '';
     inputAutor.style.boxShadow = '';
+
+}
+
+function limpiarCamposModificarLibro() {
+    var inputEditorial = document.getElementById('cmbEditorialu');
+    var inputIsbn = document.getElementById('txtIsbnu');
+    var inputTitulo = document.getElementById('txtTitulou');
+    var inputAnio = document.getElementById('txtAniou');
+    var inputPrecioventa = document.getElementById('txtPrecioVentau');
+    var inputAutor = document.getElementById('cmbAutoresu');
+    var mensajeEditorial = document.getElementById('mensajeEditorialLibrou');
+    var mensajeIsbn = document.getElementById('mensajeIsbnu');
+    var mensajeTitulo = document.getElementById('mensajeTitulou');
+    var mensajeAnio = document.getElementById('mensajeAniou');
+    var mensajePVP = document.getElementById('mensajePVPu');
+    var mensajeAutor = document.getElementById('mensajeAutoru');
+
+    mensajeEditorial.hidden = true;
+    inputEditorial.style.border = '';
+    inputEditorial.style.borderColor = '';
+    inputEditorial.style.boxShadow = '';
+
+    mensajeIsbn.hidden = true;
+    inputIsbn.style.border = '';
+    inputIsbn.style.borderColor = '';
+    inputIsbn.style.boxShadow = '';
+
+    mensajeTitulo.hidden = true;
+    inputTitulo.style.border = '';
+    inputTitulo.style.borderColor = '';
+    inputTitulo.style.boxShadow = '';
+
+    mensajeAnio.hidden = true;
+    inputAnio.style.border = '';
+    inputAnio.style.borderColor = '';
+    inputAnio.style.boxShadow = '';
+
+    mensajePVP.hidden = true;
+    inputPrecioventa.style.border = '';
+    inputPrecioventa.style.borderColor = '';
+    inputPrecioventa.style.boxShadow = '';
+
+    mensajeAutor.hidden = true;
+    inputAutor.style.border = '';
+    inputAutor.style.borderColor = '';
+    inputAutor.style.boxShadow = '';
+
+}
+
+function limpiarCamposPVPGeneral() {
+    var inputPorcentaje = document.getElementById('txtPorcentajePVP');
+    var mensaje = document.getElementById('mensajePorcentajePVP');
+
+    inputPorcentaje.style.border = '';
+    inputPorcentaje.style.borderColor = '';
+    inputPorcentaje.style.boxShadow = '';
+    mensaje.hidden = true;
+
+}
+
+function limpiarCamposPVPEspecifico() {
+    var inputPorcentaje = document.getElementById('txtPorcentajePVPLibro');
+    var mensaje = document.getElementById('mensajePorcentajePVPLibro');
+
+    inputPorcentaje.style.border = '';
+    inputPorcentaje.style.borderColor = '';
+    inputPorcentaje.style.boxShadow = '';
+    mensaje.hidden = true;
 
 }

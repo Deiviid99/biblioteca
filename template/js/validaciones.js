@@ -20,6 +20,17 @@ $(document).ready(function () {
     $('#cmbAutores').change(libroAgregar);
 
     /*------------------MODIFICAR LIBRO-------------------*/
+    $('#cmbEditorialu').change(libroModificar);
+    $('#txtIsbnu').keyup(libroModificar);
+    $('#txtTitulou').keyup(libroModificar);
+    $('#txtAniou').keyup(libroModificar);
+    $('#txtPrecioVentau').keyup(libroModificar);
+    $('#cmbAutoresu').change(libroModificar);
+
+    /*------------------MODIFICAR PVP GENERAL-------------------*/
+    $('#txtPorcentajePVP').keyup(porcentajeLibroGeneral);
+    /*------------------MODIFICAR PVP ESPECIFICO-------------------*/
+    $('#txtPorcentajePVPLibro').keyup(porcentajeLibroEspecifico);
 
 });
 
@@ -73,7 +84,6 @@ function editorialAgregar() {
     }
 
 }
-
 function editorialModificar() {
     var nombre = $('#txtNombreEditorialu').val();
     var inputNombre = document.getElementById('txtNombreEditorialu');
@@ -215,7 +225,6 @@ function autorAgregar() {
     }
 
 }
-
 function autorModificar() {
     var nombre = $('#txtNombreAutoru').val();
     var apellido = $('#txtApellidoAutoru').val();
@@ -530,7 +539,348 @@ function libroAgregar() {
     if (valorEditorial == true && valorIsbn == true && valorTitulo == true && valorAnio == true && valorPrecioventa == true && valorAutor == true) {
         guardar.disabled = false;
     }
+}
+function libroModificar() {
+    var editorial = $('#cmbEditorialu').val();
+    var isbn = $('#txtIsbnu').val();
+    var titulo = $('#txtTitulou').val();
+    var anio = $('#txtAniou').val();
+    var precioventa = $('#txtPrecioVentau').val();
+    var autor = $('#cmbAutoresu').val();
+    var inputEditorial = document.getElementById('cmbEditorialu');
+    var inputIsbn = document.getElementById('txtIsbnu');
+    var inputTitulo = document.getElementById('txtTitulou');
+    var inputAnio = document.getElementById('txtAniou');
+    var inputPrecioventa = document.getElementById('txtPrecioVentau');
+    var inputAutor = document.getElementById('cmbAutoresu');
+    var mensajeEditorial = document.getElementById('mensajeEditorialLibrou');
+    var mensajeIsbn = document.getElementById('mensajeIsbnu');
+    var mensajeTitulo = document.getElementById('mensajeTitulou');
+    var mensajeAnio = document.getElementById('mensajeAniou');
+    var mensajePVP = document.getElementById('mensajePVPu');
+    var mensajeAutor = document.getElementById('mensajeAutoru');
+    var actualizar = document.getElementById('btnActualizarLibro');
+    var agregar = document.getElementById('btnAgregarLibro');
+    var valorEditorial = false;
+    var valorIsbn = false;
+    var valorTitulo = false;
+    var valorAnio = false;
+    var valorPrecioventa = false;
+    var valorAutor = false;
+    var expresionPVP = /(?=[^\0])(?=^([0-9]+){0,1}(\.[0-9]{1,2}){0,1}$)/;
+
+    actualizar.disabled = true;
+    agregar.disabled = true;
+
+    if (editorial == 0 || editorial == null) {
+        //INCORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        mensajeEditorial.hidden = false;
+        inputEditorial.style.border = '1px solid transparent';
+        inputEditorial.style.borderColor = '#DE0F0F';
+        inputEditorial.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensajeEditorial.innerHTML = "*Campo obligatorio";
+        valorEditorial = false;
+    } else {
+        //CORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        inputEditorial.style.border = '1px solid transparent';
+        inputEditorial.style.borderColor = '#1cc88a';
+        inputEditorial.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensajeEditorial.hidden = true;
+        valorEditorial = true;
+
+    }
+
+    if (isbn.trim() == "") {
+        //INCORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        mensajeIsbn.hidden = false;
+        inputIsbn.style.border = '1px solid transparent';
+        inputIsbn.style.borderColor = '#DE0F0F';
+        inputIsbn.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensajeIsbn.innerHTML = "*Campo obligatorio";
+        valorIsbn = false;
+    } else {
+        //CORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        inputIsbn.style.border = '1px solid transparent';
+        inputIsbn.style.borderColor = '#1cc88a';
+        inputIsbn.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensajeIsbn.hidden = true;
+        valorIsbn = true;
+        if (isbn.length > 16) {
+            //INCORRECTO
+            actualizar.disabled = true;
+            agregar.disabled = true;
+            mensajeIsbn.hidden = false;
+            inputIsbn.style.border = '1px solid transparent';
+            inputIsbn.style.borderColor = '#DE0F0F';
+            inputIsbn.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+            mensajeIsbn.innerHTML = "El isbn es muy extenso (Máximo 16 caracteres)";
+            valorIsbn = false;
+        } else {
+            //CORRECTO
+            actualizar.disabled = true;
+            agregar.disabled = true;
+            inputIsbn.style.border = '1px solid transparent';
+            inputIsbn.style.borderColor = '#1cc88a';
+            inputIsbn.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+            mensajeIsbn.hidden = true;
+            valorIsbn = true;
+        }
+    }
+
+    if (titulo.trim() == "") {
+        //INCORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        mensajeTitulo.hidden = false;
+        inputTitulo.style.border = '1px solid transparent';
+        inputTitulo.style.borderColor = '#DE0F0F';
+        inputTitulo.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensajeTitulo.innerHTML = "*Campo obligatorio";
+        valorTitulo = false;
+    } else {
+        //CORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        inputTitulo.style.border = '1px solid transparent';
+        inputTitulo.style.borderColor = '#1cc88a';
+        inputTitulo.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensajeTitulo.hidden = true;
+        valorTitulo = true;
+        if (titulo.length > 80) {
+            //INCORRECTO
+            actualizar.disabled = true;
+            agregar.disabled = true;
+            mensajeTitulo.hidden = false;
+            inputTitulo.style.border = '1px solid transparent';
+            inputTitulo.style.borderColor = '#DE0F0F';
+            inputTitulo.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+            mensajeTitulo.innerHTML = "El título es muy extenso (Máximo 80 caracteres)";
+            valorTitulo = false;
+        } else {
+            //CORRECTO
+            actualizar.disabled = true;
+            agregar.disabled = true;
+            inputTitulo.style.border = '1px solid transparent';
+            inputTitulo.style.borderColor = '#1cc88a';
+            inputTitulo.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+            mensajeTitulo.hidden = true;
+            valorTitulo = true;
+        }
+    }
+
+    if (anio.trim() == "") {
+        //INCORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        mensajeAnio.hidden = false;
+        inputAnio.style.border = '1px solid transparent';
+        inputAnio.style.borderColor = '#DE0F0F';
+        inputAnio.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensajeAnio.innerHTML = "*Campo obligatorio";
+        valorAnio = false;
+    } else {
+        //CORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        inputAnio.style.border = '1px solid transparent';
+        inputAnio.style.borderColor = '#1cc88a';
+        inputAnio.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensajeAnio.hidden = true;
+        valorAnio = true;
+        if (anio.length > 4) {
+            //INCORRECTO
+            actualizar.disabled = true;
+            agregar.disabled = true;
+            mensajeAnio.hidden = false;
+            inputAnio.style.border = '1px solid transparent';
+            inputAnio.style.borderColor = '#DE0F0F';
+            inputAnio.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+            mensajeAnio.innerHTML = "El año tiene que ser (Máximo 4 caracteres)";
+            valorAnio = false;
+        } else {
+            //CORRECTO
+            actualizar.disabled = true;
+            agregar.disabled = true;
+            inputAnio.style.border = '1px solid transparent';
+            inputAnio.style.borderColor = '#1cc88a';
+            inputAnio.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+            mensajeAnio.hidden = true;
+            valorAnio = true;
+        }
+    }
+
+    if (precioventa.trim() == "") {
+        //INCORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        mensajePVP.hidden = false;
+        inputPrecioventa.style.border = '1px solid transparent';
+        inputPrecioventa.style.borderColor = '#DE0F0F';
+        inputPrecioventa.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensajePVP.innerHTML = "*Campo obligatorio";
+        valorPrecioventa = false;
+    } else {
+        //CORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        inputPrecioventa.style.border = '1px solid transparent';
+        inputPrecioventa.style.borderColor = '#1cc88a';
+        inputPrecioventa.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensajePVP.hidden = true;
+        valorPrecioventa = true;
+        if (!expresionPVP.test(precioventa)) {
+            //INCORRECTO
+            actualizar.disabled = true;
+            agregar.disabled = true;
+            mensajePVP.hidden = false;
+            inputPrecioventa.style.border = '1px solid transparent';
+            inputPrecioventa.style.borderColor = '#DE0F0F';
+            inputPrecioventa.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+            mensajePVP.innerHTML = "El P.V.P tiene que ser un número, mayor a 0 (Máximo 2 decimales)";
+            valorPrecioventa = false;
+        } else {
+            //CORRECTO
+            actualizar.disabled = true;
+            agregar.disabled = true;
+            inputPrecioventa.style.border = '1px solid transparent';
+            inputPrecioventa.style.borderColor = '#1cc88a';
+            inputPrecioventa.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+            mensajePVP.hidden = true;
+            valorPrecioventa = true;
+        }
+    }
+
+    if (autor == 0 || autor == null) {
+        //INCORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        mensajeAutor.hidden = false;
+        inputAutor.style.border = '1px solid transparent';
+        inputAutor.style.borderColor = '#DE0F0F';
+        inputAutor.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensajeAutor.innerHTML = "*Campo obligatorio";
+        valorAutor = false;
+    } else {
+        //CORRECTO
+        actualizar.disabled = true;
+        agregar.disabled = true;
+        inputAutor.style.border = '1px solid transparent';
+        inputAutor.style.borderColor = '#1cc88a';
+        inputAutor.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensajeAutor.hidden = true;
+        valorAutor = true;
+    }
+
+    if (valorEditorial == true && valorIsbn == true && valorTitulo == true && valorAnio == true && valorPrecioventa == true && valorAutor == true) {
+        actualizar.disabled = false;
+        agregar.disabled = false;
+    }
+}
 
 
+function porcentajeLibroGeneral() {
+    var porcentaje = $('#txtPorcentajePVP').val();
+    var inputPorcentaje = document.getElementById('txtPorcentajePVP');
+    var mensaje = document.getElementById('mensajePorcentajePVP');
+    var guardar = document.getElementById('btnActualizarPVP');
+    var valor = false;
+    var expresionPVP = /(?=[^\0])(?=^([0-9]+){0,1}(\.[0-9]{1,2}){0,1}$)/;
+    guardar.disabled = true;
 
+    if (porcentaje.trim() == "") {
+        //INCORRECTO
+        guardar.disabled = true;
+        mensaje.hidden = false;
+        inputPorcentaje.style.border = '1px solid transparent';
+        inputPorcentaje.style.borderColor = '#DE0F0F';
+        inputPorcentaje.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensaje.innerHTML = "*Campo obligatorio";
+        valor = false;
+    } else {
+        //CORRECTO
+        inputPorcentaje.style.border = '1px solid transparent';
+        inputPorcentaje.style.borderColor = '#1cc88a';
+        inputPorcentaje.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensaje.hidden = true;
+        valor = true;
+        if (!expresionPVP.test(porcentaje)) {
+            //INCORRECTO
+            guardar.disabled = true;
+            mensaje.hidden = false;
+            inputPorcentaje.style.border = '1px solid transparent';
+            inputPorcentaje.style.borderColor = '#DE0F0F';
+            inputPorcentaje.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+            mensaje.innerHTML = "El %P.V.P tiene que ser un número, mayor a 0 (Máximo 2 decimales)";
+            valor = false;
+        } else {
+            //CORRECTO
+            guardar.disabled = true;
+            inputPorcentaje.style.border = '1px solid transparent';
+            inputPorcentaje.style.borderColor = '#1cc88a';
+            inputPorcentaje.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+            mensaje.hidden = true;
+            valor = true;
+        }
+    }
+
+    if (valor == true) {
+        guardar.disabled = false;
+    }
+}
+function porcentajeLibroEspecifico() {
+    var porcentaje = $('#txtPorcentajePVPLibro').val();
+    var inputPorcentaje = document.getElementById('txtPorcentajePVPLibro');
+    var mensaje = document.getElementById('mensajePorcentajePVPLibro');
+    var guardar = document.getElementById('btnActualizarPVPLibro');
+    var valor = false;
+    var expresionPVP = /(?=[^\0])(?=^([0-9]+){0,1}(\.[0-9]{1,2}){0,1}$)/;
+    guardar.disabled = true;
+
+    if (porcentaje.trim() == "") {
+        //INCORRECTO
+        guardar.disabled = true;
+        mensaje.hidden = false;
+        inputPorcentaje.style.border = '1px solid transparent';
+        inputPorcentaje.style.borderColor = '#DE0F0F';
+        inputPorcentaje.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+        mensaje.innerHTML = "*Campo obligatorio";
+        valor = false;
+    } else {
+        //CORRECTO
+        inputPorcentaje.style.border = '1px solid transparent';
+        inputPorcentaje.style.borderColor = '#1cc88a';
+        inputPorcentaje.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+        mensaje.hidden = true;
+        valor = true;
+        if (!expresionPVP.test(porcentaje)) {
+            //INCORRECTO
+            guardar.disabled = true;
+            mensaje.hidden = false;
+            inputPorcentaje.style.border = '1px solid transparent';
+            inputPorcentaje.style.borderColor = '#DE0F0F';
+            inputPorcentaje.style.boxShadow = '0 0 5px 0 rgba(222, 15, 15, 0.5)';
+            mensaje.innerHTML = "El %P.V.P tiene que ser un número, mayor a 0 (Máximo 2 decimales)";
+            valor = false;
+        } else {
+            //CORRECTO
+            guardar.disabled = true;
+            inputPorcentaje.style.border = '1px solid transparent';
+            inputPorcentaje.style.borderColor = '#1cc88a';
+            inputPorcentaje.style.boxShadow = '0 0 5px 0 rgba(28, 200, 138, 0.5)';
+            mensaje.hidden = true;
+            valor = true;
+        }
+    }
+
+    if (valor == true) {
+        guardar.disabled = false;
+    }
 }

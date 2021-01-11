@@ -78,24 +78,28 @@ class Libro
         $anio = trim($_POST['txtAniou']);
         $precioventa = trim($_POST['txtPrecioVentau']);
 
-        $sqlValidar = "CALL stp_validar_autorlibro('$autor','$libro')";
-        $resultValidar = mysqli_query($con, $sqlValidar);
-        $con->close();
-        if (mysqli_num_rows($resultValidar) > 0) {
-            $con = Conexion();
-            $sql = "CALL stp_modificarlibro_autor('$editorial','$libro','$isbn','$titulo','$anio','$precioventa')";
-            $result = mysqli_query($con, $sql);
-            $con->close();
-            if ($result) {
-                echo "1";
-            }
+        if ($editorial == "" || $editorial == "0" || $isbn == "" || $titulo == "" || $anio == "" || $precioventa == "" || $autor == "0") {
+            echo "1";
         } else {
-            $con = Conexion();
-            $sql = "CALL stp_modificarlibro('$autor','$libro','$editorial','$autorLibro','$isbn','$titulo','$anio','$precioventa')";
-            $result = mysqli_query($con, $sql);
+            $sqlValidar = "CALL stp_validar_autorlibro('$autor','$libro')";
+            $resultValidar = mysqli_query($con, $sqlValidar);
             $con->close();
-            if ($result) {
-                echo "2";
+            if (mysqli_num_rows($resultValidar) > 0) {
+                $con = Conexion();
+                $sql = "CALL stp_modificarlibro_autor('$editorial','$libro','$isbn','$titulo','$anio','$precioventa')";
+                $result = mysqli_query($con, $sql);
+                $con->close();
+                if ($result) {
+                    echo "2";
+                }
+            } else {
+                $con = Conexion();
+                $sql = "CALL stp_modificarlibro('$autor','$libro','$editorial','$autorLibro','$isbn','$titulo','$anio','$precioventa')";
+                $result = mysqli_query($con, $sql);
+                $con->close();
+                if ($result) {
+                    echo "3";
+                }
             }
         }
     }
@@ -146,55 +150,59 @@ class Libro
         $porcentaje = trim($_POST['txtPorcentajePVP']);
         $opcion = $_POST['chkOpcion'];
 
-        $sql = "CALL stp_obtener_libros()";
-        $result = mysqli_query($con, $sql);
-        $con->close();
-        if ($opcion == "mas") {
-            if (mysqli_num_rows($result) > 0) {
-                $con = Conexion();
-                while ($row = mysqli_fetch_array($result)) {
-                    $valor = 0;
-                    $idLibro = $row["LIB_ID"];
-                    $pvp = $row["LIB_PRECIOVENTA"];
-
-                    $calculoporcentaje = (floatval($pvp) * floatval($porcentaje)) / 100;
-                    $valor = number_format(floatval($pvp) + $calculoporcentaje, 2, '.', '');
-
-                    $sqlUpdate = "CALL stp_modificar_pvplibros('$idLibro','$valor')";
-                    $resultUpdate = mysqli_query($con, $sqlUpdate);
-                }
-                $con->close();
-                if ($resultUpdate) {
-                    echo "1";
-                }
-            } else {
-                echo "2";
-            }
+        if ($porcentaje == "" || floatval($porcentaje) <= 0) {
+            echo "4";
         } else {
-            if (mysqli_num_rows($result) > 0) {
-                $con = Conexion();
-                while ($row = mysqli_fetch_array($result)) {
-                    $valor = 0;
-                    $idLibro = $row["LIB_ID"];
-                    $pvp = $row["LIB_PRECIOVENTA"];
+            $sql = "CALL stp_obtener_libros()";
+            $result = mysqli_query($con, $sql);
+            $con->close();
+            if ($opcion == "mas") {
+                if (mysqli_num_rows($result) > 0) {
+                    $con = Conexion();
+                    while ($row = mysqli_fetch_array($result)) {
+                        $valor = 0;
+                        $idLibro = $row["LIB_ID"];
+                        $pvp = $row["LIB_PRECIOVENTA"];
 
-                    $calculoporcentaje = (floatval($pvp) * floatval($porcentaje)) / 100;
-                    $valor = number_format(floatval($pvp) - $calculoporcentaje, 2, '.', '');
-                    if ($valor > 0) {
+                        $calculoporcentaje = (floatval($pvp) * floatval($porcentaje)) / 100;
+                        $valor = number_format(floatval($pvp) + $calculoporcentaje, 2, '.', '');
+
                         $sqlUpdate = "CALL stp_modificar_pvplibros('$idLibro','$valor')";
                         $resultUpdate = mysqli_query($con, $sqlUpdate);
-                    } else {
-                        $resultUpdate = null;
                     }
-                }
-                $con->close();
-                if ($resultUpdate != null) {
-                    echo "1";
+                    $con->close();
+                    if ($resultUpdate) {
+                        echo "1";
+                    }
                 } else {
-                    echo "3";
+                    echo "2";
                 }
             } else {
-                echo "2";
+                if (mysqli_num_rows($result) > 0) {
+                    $con = Conexion();
+                    while ($row = mysqli_fetch_array($result)) {
+                        $valor = 0;
+                        $idLibro = $row["LIB_ID"];
+                        $pvp = $row["LIB_PRECIOVENTA"];
+
+                        $calculoporcentaje = (floatval($pvp) * floatval($porcentaje)) / 100;
+                        $valor = number_format(floatval($pvp) - $calculoporcentaje, 2, '.', '');
+                        if ($valor > 0) {
+                            $sqlUpdate = "CALL stp_modificar_pvplibros('$idLibro','$valor')";
+                            $resultUpdate = mysqli_query($con, $sqlUpdate);
+                        } else {
+                            $resultUpdate = null;
+                        }
+                    }
+                    $con->close();
+                    if ($resultUpdate != null) {
+                        echo "1";
+                    } else {
+                        echo "3";
+                    }
+                } else {
+                    echo "2";
+                }
             }
         }
     }
@@ -206,24 +214,15 @@ class Libro
         $idPVPLibro = $_POST['txtIdPVPLibro'];
         $opcion = $_POST['chkOpcionLibro'];
 
-        if ($opcion == "mas") {
-            $con = Conexion();
-            $valor = 0;
-            $calculoporcentaje = (floatval($pvpLibro) * floatval($porcentaje)) / 100;
-            $valor = number_format(floatval($pvpLibro) + $calculoporcentaje, 2, '.', '');
-
-            $sqlUpdate = "CALL stp_modificar_pvplibros('$idPVPLibro','$valor')";
-            $resultUpdate = mysqli_query($con, $sqlUpdate);
-            $con->close();
-            if ($resultUpdate) {
-                echo "1";
-            }
+        if ($porcentaje == "" || floatval($porcentaje) <= 0) {
+            echo "4";
         } else {
-            $con = Conexion();
-            $valor = 0;
-            $calculoporcentaje = (floatval($pvpLibro) * floatval($porcentaje)) / 100;
-            $valor = number_format(floatval($pvpLibro) - $calculoporcentaje, 2, '.', '');
-            if ($valor > 0) {
+            if ($opcion == "mas") {
+                $con = Conexion();
+                $valor = 0;
+                $calculoporcentaje = (floatval($pvpLibro) * floatval($porcentaje)) / 100;
+                $valor = number_format(floatval($pvpLibro) + $calculoporcentaje, 2, '.', '');
+
                 $sqlUpdate = "CALL stp_modificar_pvplibros('$idPVPLibro','$valor')";
                 $resultUpdate = mysqli_query($con, $sqlUpdate);
                 $con->close();
@@ -231,11 +230,24 @@ class Libro
                     echo "1";
                 }
             } else {
-                echo "2";
+                $con = Conexion();
+                $valor = 0;
+                $calculoporcentaje = (floatval($pvpLibro) * floatval($porcentaje)) / 100;
+                $valor = number_format(floatval($pvpLibro) - $calculoporcentaje, 2, '.', '');
+                if ($valor > 0) {
+                    $sqlUpdate = "CALL stp_modificar_pvplibros('$idPVPLibro','$valor')";
+                    $resultUpdate = mysqli_query($con, $sqlUpdate);
+                    $con->close();
+                    if ($resultUpdate) {
+                        echo "1";
+                    }
+                } else {
+                    echo "2";
+                }
             }
         }
     }
-
+    
     function obtenerAutor()
     {
         //INSTANCIO LA CONEXION BD

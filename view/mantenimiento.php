@@ -141,22 +141,26 @@ require_once("../controller/libroController.php");
                                 }
                                 ?>
                             </select>
+                            <div id="mensajeEditorialLibrou" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                         <div class="col">
                             <label for="" style="font-weight: bold;">ISBN: </label>
                             <input type="text" class="form-control" name="txtIsbnu" id="txtIsbnu" />
+                            <div id="mensajeIsbnu" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                     </div>
                     <hr>
                     <div>
                         <label for="" style="font-weight: bold;">Título: </label>
                         <input type="text" class="form-control" name="txtTitulou" id="txtTitulou" />
+                        <div id="mensajeTitulou" style="color: #DE0F0F; font-size: 12px;"></div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col">
                             <label for="" style="font-weight: bold;">Año: </label>
                             <input type="text" class="form-control" name="txtAniou" id="txtAniou" />
+                            <div id="mensajeAniou" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                         <div class="col">
                             <label for="" style="font-weight: bold;">$P.V.P: </label>
@@ -166,6 +170,7 @@ require_once("../controller/libroController.php");
                                 </div>
                                 <input type="text" class="form-control" name="txtPrecioVentau" id="txtPrecioVentau" />
                             </div>
+                            <div id="mensajePVPu" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                     </div>
                     <hr>
@@ -180,6 +185,7 @@ require_once("../controller/libroController.php");
                                 <option value="<?php echo $row["AUT_ID"]; ?>"><?php echo $row["AUT_NOMBRE"] . " " . $row["AUT_APELLIDO"] ?></option>
                             <?php } ?>
                         </select>
+                        <div id="mensajeAutoru" style="color: #DE0F0F; font-size: 12px;"></div>
                     </div>
                 </div>
                 <div class="modal-footer" style="background-color: #F9F9F9;">

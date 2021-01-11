@@ -141,13 +141,14 @@
 
                     <div class="form-group">
                         <div class="col">
-                            <label for="" class="titulos_formularios">Porcentaje: </label>
+                            <label for="txtPorcentajePVP" class="titulos_formularios">Porcentaje: </label>
                             <div class="input-group mb-2">
                                 <div class="input-group-addon">
                                     %
                                 </div>
                                 <input type="text" class="form-control" name="txtPorcentajePVP" id="txtPorcentajePVP" placeholder="0.00" />
                             </div>
+                            <div id="mensajePorcentajePVP" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                         <div class="col">
                             <div class="form-check">
@@ -195,8 +196,9 @@
                                 <div class="input-group-addon">
                                     %
                                 </div>
-                                <input type="text" class="form-control" name="txtPorcentajePVPLibro" id="txtPorcentajePVPLibro" placeholder="0.00"/>
+                                <input type="text" class="form-control" name="txtPorcentajePVPLibro" id="txtPorcentajePVPLibro" placeholder="0.00" />
                             </div>
+                            <div id="mensajePorcentajePVPLibro" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                         <div class="col">
                             <div class="form-check">
