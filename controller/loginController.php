@@ -15,23 +15,27 @@ class Login
     {
         session_start();
         $con = Conexion();
-        $correo = $_POST["txtCorreo"];
-        $password = md5($_POST["txtPassword"]);
-        $sql = "CALL stp_obtenerusuario_login('$correo','$password')";
-        $result = mysqli_query($con, $sql);
-        $con->close();
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_array($result)) {
-                $idUsuario = $row['usu_id'];
-                $rol = $row['rol_id'];
-                $nombreUsuario = $row['usu_nombre'] . ' ' . $row['usu_apellido'];
-            }
-            $_SESSION['idUsuario'] = $idUsuario;
-            $_SESSION['rol'] = $rol;
-            $_SESSION['nombreUsuario'] = $nombreUsuario;
-            echo "1";
-        } else {
+        $correo = trim($_POST["txtCorreo"]);
+        $password = trim(md5($_POST["txtPassword"]));
+        if ($correo == "" || $password == "") {
             echo "2";
+        } else {
+            $sql = "CALL stp_obtenerusuario_login('$correo','$password')";
+            $result = mysqli_query($con, $sql);
+            $con->close();
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_array($result)) {
+                    $idUsuario = $row['usu_id'];
+                    $rol = $row['rol_id'];
+                    $nombreUsuario = $row['usu_nombre'] . ' ' . $row['usu_apellido'];
+                }
+                $_SESSION['idUsuario'] = $idUsuario;
+                $_SESSION['rol'] = $rol;
+                $_SESSION['nombreUsuario'] = $nombreUsuario;
+                echo "1";
+            } else {
+                echo "2";
+            }
         }
     }
 
@@ -190,22 +194,26 @@ class Login
     {
         $con = Conexion();
         $datos = new Login();
-        $correo = $_POST['txtCorreo'];
+        $correo = trim($_POST['txtCorreo']);
         $fechaRecuperacion = date("Y-m-d H:i:s", strtotime('+24 hours'));
         $codigoRecuperacion = codigoRandom();
-        //VALIDAR SI EXISTE RECUPERACION DE CLAVE CON ESE CODIGO
-        $sql = "CALL stp_enviarcorreo_usuario('$correo','$codigoRecuperacion','$fechaRecuperacion')";
-        $result = mysqli_query($con, $sql);
-        if (mysqli_num_rows($result) == 0) {
-            echo "1";
+        if ($correo == "") {
+            echo "3";
         } else {
-            //RECORRO LA CONSULTA RETORNADA Y LUEGO CAPTURO EL ID DEL ROL PARA COMPARAR
-            while ($row = mysqli_fetch_array($result)) {
-                $nombre = $row['usu_nombre'];
+            //VALIDAR SI EXISTE RECUPERACION DE CLAVE CON ESE CODIGO
+            $sql = "CALL stp_enviarcorreo_usuario('$correo','$codigoRecuperacion','$fechaRecuperacion')";
+            $result = mysqli_query($con, $sql);
+            if (mysqli_num_rows($result) == 0) {
+                echo "1";
+            } else {
+                //RECORRO LA CONSULTA RETORNADA Y LUEGO CAPTURO EL ID DEL ROL PARA COMPARAR
+                while ($row = mysqli_fetch_array($result)) {
+                    $nombre = $row['usu_nombre'];
+                }
+                //LE ENVIO UN CORREO CON LOS DATOS
+                $datos->enviarCorreo($correo, $nombre, $codigoRecuperacion);
+                echo "2";
             }
-            //LE ENVIO UN CORREO CON LOS DATOS
-            $datos->enviarCorreo($correo, $nombre, $codigoRecuperacion);
-            echo "2";
         }
     }
 

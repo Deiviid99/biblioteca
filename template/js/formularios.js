@@ -13,7 +13,10 @@ $(document).ready(function () {
                 } else if (data == "2") {
                     alertify.success("Registro exitoso");
                     document.getElementById("frmRegistroUsuario").reset();
-                } else {
+                } else if (data == "3") {
+                    alertify.warning("No se pueden registrar datos vacíos.");
+                }
+                else {
                     alertify.error("Error de registro");
                 }
             }
@@ -55,6 +58,8 @@ $(document).ready(function () {
                     alertify.warning("El correo electrónico no se encuentra registrado en nuestro sistema.");
                 } else if (data == "2") {
                     alertify.alert("Información", "Se ha enviado un correo electrónico con las instrucciones para recuperar su contraseña, por favor verifique la información en su bandeja de entrada o spam.", function () { window.location = directorio + "/view/login.php"; });
+                } else if (data == "3") {
+                    alertify.warning("El correo no puede ser vacío.");
                 } else {
                     alertify.error("No se puede recuperar la cuenta. Si los errores persisten, por favor comuníquese con el administrador del sistema.");
                 }
@@ -67,7 +72,6 @@ $(document).ready(function () {
         var datos = $('#frmCambiarClave').serialize();
         var directorio = "http://192.168.1.33:82/biblioteca";
         alertify.set('notifier', 'position', 'top-right');
-
         $.ajax({
             type: "POST",
             url: "../controller/loginController.php?loginrecovery=password",

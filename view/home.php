@@ -26,17 +26,9 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Basic Card Example -->
-                    <div class="card shadow mb-4" align="center">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold">BIENVENIDO/A AL SISTEMA</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="col-6">
-                                <img src="<?php echo URL; ?>/template/img/home.jpg" alt="" width="100%" height="100%">
-                            </div>
+                    <h1 class="m-0 font-weight-bold" style="text-align: center; color: #23395B;">BIENVENIDO/A AL SISTEMA</h1>
+                    <img src="<?php echo URL; ?>/template/img/libros.jpg" style="border-radius: 2rem;" alt="" width="100%">
 
-                        </div>
-                    </div>
 
                 </div>
                 <!-- /.container-fluid -->
