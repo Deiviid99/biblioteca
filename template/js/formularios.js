@@ -243,8 +243,9 @@ $(document).ready(function () {
             data: datos,
             success: function (data) {
                 if (data == "1") {
-                    alertify.alert("Información", "Lo sentimos, no se puede actualizar, el autor ya existe en el libro.");
-
+                    alertify.success("Actualización exitosa")
+                    $("#modalModificarLibro").modal('hide');
+                    alertify.alert("Información", "La actualización se la realizó sin considerar el autor, el cual ya existe en el libro.", function () { window.location = directorio + "/view/mantenimiento.php?libro=" + idLibro; });
                 } else if (data == "2") {
                     alertify.success("Actualización exitosa")
                     $("#modalModificarLibro").modal('hide');

@@ -1,6 +1,6 @@
 <?php
 include("../model/conexion.php");
-
+require_once("../controller/helperController.php");
 class Libro
 {
     function obtenerLibro($idLibro)
@@ -47,7 +47,7 @@ class Libro
     function guardarLibroAutor()
     {
         $con = Conexion();
-        $libro = $_POST['txtIdLibro'];
+        $libro = desencriptar($_POST['txtIdLibro']);
         $autor = $_POST['cmbAutoresu'];
 
         $sqlValidar = "CALL stp_validar_autorlibro('$autor','$libro')";
@@ -70,7 +70,7 @@ class Libro
     {
         $con = Conexion();
         $autorLibro = $_POST['txtIdLibroAutor'];
-        $libro = $_POST['txtIdLibro'];
+        $libro = desencriptar($_POST['txtIdLibro']);
         $autor = $_POST['cmbAutoresu'];
         $editorial = $_POST['cmbEditorialu'];
         $isbn = trim($_POST['txtIsbnu']);
@@ -82,7 +82,13 @@ class Libro
         $resultValidar = mysqli_query($con, $sqlValidar);
         $con->close();
         if (mysqli_num_rows($resultValidar) > 0) {
-            echo "1";
+            $con = Conexion();
+            $sql = "CALL stp_modificarlibro_autor('$editorial','$libro','$isbn','$titulo','$anio','$precioventa')";
+            $result = mysqli_query($con, $sql);
+            $con->close();
+            if ($result) {
+                echo "1";
+            }
         } else {
             $con = Conexion();
             $sql = "CALL stp_modificarlibro('$autor','$libro','$editorial','$autorLibro','$isbn','$titulo','$anio','$precioventa')";

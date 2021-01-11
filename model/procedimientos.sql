@@ -274,6 +274,25 @@ DELIMITER $$
 
 CALL stp_modificarlibro('1','2','3','4','312132-321','Programacion nueva','2020','13.50');
 
+/*--Modificar Libro Autor--*/
+DELIMITER $$
+CREATE PROCEDURE stp_modificarlibro_autor (IN ideditorial INT, IN idlibro INT, IN isbn VARCHAR(50), IN titulo VARCHAR(100), IN anio VARCHAR(4), IN precioventa DECIMAL(8,2))
+BEGIN
+
+UPDATE tbl_libro 
+SET lib_titulo=titulo, lib_isbn=isbn, lib_anio=anio, lib_precioventa=precioventa, edi_id=ideditorial
+WHERE lib_estado='A' AND lib_id=idlibro;
+
+END$$
+DELIMITER $$
+
+CALL stp_modificarlibro_autor('3','4','312132-321','Programacion nueva','2020','13.50');
+
+
+
+
+
+
 /*--Validar si existen autores relacionados con Libros--*/
 DELIMITER $$
 CREATE PROCEDURE stp_validar_autorlibros (IN idlibro INT)

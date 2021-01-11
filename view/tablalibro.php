@@ -1,6 +1,5 @@
 <?php
 require_once("../controller/libroController.php");
-require_once("../controller/helperController.php");
 session_start();
 if (isset($_SESSION["rol"]) && $_SESSION["rol"] == 1) { ?>
     <div class="card shadow mb-4">

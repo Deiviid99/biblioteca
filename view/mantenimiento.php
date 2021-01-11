@@ -1,6 +1,5 @@
 <?php
 require_once("../controller/libroController.php");
-require_once("../controller/helperController.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +66,7 @@ require_once("../controller/helperController.php");
                                         $cont = 0;
                                         while ($row = mysqli_fetch_array($libro)) {
                                             $cont = $cont + 1;
-                                            $datos = $row["aut_id"] . "||" . $row["lib_id"] . "||" . $row["edi_id"] . "||" .  $row["lib_isbn"] . "||" . $row["lib_titulo"] . "||" . $row["lib_anio"] . "||" . $row["lib_precioventa"] . "||" . $row["aul_id"];
+                                            $datos = $row["aut_id"] . "||" . encriptar($row["lib_id"]) . "||" . $row["edi_id"] . "||" .  $row["lib_isbn"] . "||" . $row["lib_titulo"] . "||" . $row["lib_anio"] . "||" . $row["lib_precioventa"] . "||" . $row["aul_id"];
                                             $valores = $row["lib_id"] . "||" . $row["lib_precioventa"];
                                         ?>
                                             <tr>
