@@ -121,8 +121,7 @@ class Usuario
                     }
                 }
                 $con = Conexion();
-                $sqlRegistro = "UPDATE tbl_usuario SET rol_id='$rol',usu_nombre='$nombre',usu_apellido='$apellido', usu_password='$pass',usu_identificacion='$identificacion',
-                usu_telefono='$telefono',usu_direccion='$direccion' WHERE usu_estado='A' AND usu_id='$idUsuario'";
+                $sqlRegistro = "CALL stp_modificarusuario_nocorreo('$rol','$nombre','$apellido','$pass','$identificacion','$telefono','$direccion','$idUsuario')";
                 $resultRegistro = mysqli_query($con, $sqlRegistro);
                 $con->close();
                 if ($resultRegistro) {
@@ -131,7 +130,7 @@ class Usuario
             } else {
                 //INSTANCIO LA CONEXION BD  
                 $con = Conexion();
-                $sqlValidar = "SELECT * FROM tbl_usuario WHERE usu_estado='A' AND usu_id='$idUsuario'";
+                $sqlValidar = "CALL stp_obtenerusuario_id('$idUsuario')";
                 $resultValidar = mysqli_query($con, $sqlValidar);
                 $con->close();
                 while ($dato = mysqli_fetch_array($resultValidar)) {
@@ -144,8 +143,7 @@ class Usuario
                 //INSTANCIO LA CONEXION BD  
                 $con = Conexion();
                 //EJECUTO PROCEDIMIENTO ALMACENADO
-                $sqlRegistro = "UPDATE tbl_usuario SET rol_id='$rol',usu_nombre='$nombre',usu_apellido='$apellido', usu_correo='$correo',usu_password='$pass',usu_identificacion='$identificacion',
-                usu_telefono='$telefono',usu_direccion='$direccion' WHERE  usu_estado='A' AND usu_id='$idUsuario'";
+                $sqlRegistro = "CALL stp_modificarusuario('$rol','$nombre','$apellido','$correo','$pass','$identificacion','$telefono','$direccion','$idUsuario')";
                 $resultRegistro = mysqli_query($con, $sqlRegistro);
                 $con->close();
                 if ($resultRegistro) {
@@ -161,7 +159,7 @@ class Usuario
         $con = Conexion();
         $idUsuario = $_POST['idUsuario'];
         //EJECUTO PROCEDIMIENTO ALMACENADO
-        $sql = "UPDATE tbl_usuario SET usu_estado = 'I' WHERE usu_id = '$idUsuario'";
+        $sql = "CALL stp_eliminarusuario('$idUsuario')";
         $result = mysqli_query($con, $sql);
         if ($result) {
             echo "1";
@@ -171,7 +169,7 @@ class Usuario
     function obtenerRol()
     {
         $con = Conexion();
-        $sql = "SELECT * FROM  tbl_rol  WHERE rol_estado ='A'";
+        $sql = "CALL stp_obtener_rol()";
         $result = mysqli_query($con, $sql);
         if ($result) {
             return $result;
@@ -181,7 +179,7 @@ class Usuario
     function obtenerUsuarioPerfil($idUsuario)
     {
         $con = Conexion();
-        $sql = "SELECT * FROM tbl_usuario  WHERE usu_estado = 'A' AND usu_id ='$idUsuario'";
+        $sql = "CALL stp_obtenerusuario_id('$idUsuario')";
         $result = mysqli_query($con, $sql);
         if ($result) {
             return $result;
@@ -218,8 +216,7 @@ class Usuario
                     }
                 }
                 $con = Conexion();
-                $sqlRegistro = "UPDATE tbl_usuario SET usu_nombre='$nombre',usu_apellido='$apellido', usu_password='$pass',usu_identificacion='$identificacion',
-                usu_telefono='$telefono',usu_direccion='$direccion' WHERE usu_estado='A' AND usu_id='$idUsuario'";
+                $sqlRegistro = "CALL stp_modificarperfil_nocorreo('$nombre','$apellido','$pass','$identificacion','$telefono','$direccion','$idUsuario')";
                 $resultRegistro = mysqli_query($con, $sqlRegistro);
                 $con->close();
                 if ($resultRegistro) {
@@ -228,7 +225,7 @@ class Usuario
             } else {
                 //INSTANCIO LA CONEXION BD  
                 $con = Conexion();
-                $sqlValidar = "SELECT * FROM tbl_usuario WHERE usu_estado='A' AND usu_id='$idUsuario'";
+                $sqlValidar = "CALL stp_obtenerusuario_id('$idUsuario')";
                 $resultValidar = mysqli_query($con, $sqlValidar);
                 $con->close();
                 while ($dato = mysqli_fetch_array($resultValidar)) {
@@ -241,8 +238,7 @@ class Usuario
                 //INSTANCIO LA CONEXION BD  
                 $con = Conexion();
                 //EJECUTO PROCEDIMIENTO ALMACENADO
-                $sqlRegistro = "UPDATE tbl_usuario SET usu_nombre='$nombre',usu_apellido='$apellido', usu_correo='$correo',usu_password='$pass',usu_identificacion='$identificacion',
-                usu_telefono='$telefono',usu_direccion='$direccion' WHERE  usu_estado='A' AND usu_id='$idUsuario'";
+                $sqlRegistro = "CALL stp_modificarperfil('$nombre','$apellido','$correo','$pass','$identificacion','$telefono','$direccion','$idUsuario')";
                 $resultRegistro = mysqli_query($con, $sqlRegistro);
                 $con->close();
                 if ($resultRegistro) {

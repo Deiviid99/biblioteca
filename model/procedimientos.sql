@@ -289,6 +289,100 @@ DELIMITER $$
 CALL stp_modificarlibro_autor('3','4','312132-321','Programacion nueva','2020','13.50');
 
 
+/*--Modificar Usuario--*/
+DELIMITER $$
+CREATE PROCEDURE stp_modificarusuario (IN rol INT, IN nombre VARCHAR(80), IN apellido VARCHAR(80), IN correo VARCHAR(80), IN password VARCHAR(80),
+                                     IN identificacion VARCHAR(13),IN telefono VARCHAR(15),IN direccion VARCHAR(200), IN idusuario INT)
+BEGIN
+
+UPDATE tbl_usuario SET rol_id=rol,usu_nombre=nombre,usu_apellido=apellido, usu_correo=correo,usu_password=password,usu_identificacion=identificacion,
+                       usu_telefono=telefono,usu_direccion=direccion 
+WHERE usu_estado='A' AND usu_id=idusuario;
+END$$
+DELIMITER $$
+
+CALL stp_modificarusuario('3','David','Heredia','dav@gmail.com','12345','17258518','0984047565','El conde','2');
+
+/*--Modificar Usuario sin correo--*/
+DELIMITER $$
+CREATE PROCEDURE stp_modificarusuario_nocorreo (IN rol INT, IN nombre VARCHAR(80), IN apellido VARCHAR(80), IN password VARCHAR(80),
+                                     IN identificacion VARCHAR(13),IN telefono VARCHAR(15),IN direccion VARCHAR(200), IN idusuario INT)
+BEGIN
+
+UPDATE tbl_usuario SET rol_id=rol,usu_nombre=nombre,usu_apellido=apellido, usu_password=password,usu_identificacion=identificacion,
+                       usu_telefono=telefono,usu_direccion=direccion 
+WHERE usu_estado='A' AND usu_id=idusuario;
+END$$
+DELIMITER $$
+
+CALL stp_modificarusuario_nocorreo('3','David','Heredia','12345','17258518','0984047565','El conde','2');
+
+/*--Obtener usuario por id--*/
+DELIMITER $$
+CREATE PROCEDURE stp_obtenerusuario_id (IN idusuario INT)
+BEGIN
+
+SELECT * FROM tbl_usuario WHERE usu_estado='A' AND usu_id=idusuario;
+END$$
+DELIMITER $$
+
+CALL stp_obtenerusuario_id('3');
+
+/*--Eliminar usuario--*/
+DELIMITER $$
+CREATE PROCEDURE stp_eliminarusuario (IN idusuario INT)
+BEGIN
+
+UPDATE tbl_usuario SET usu_estado = 'I' WHERE usu_id = idusuario;
+
+END$$
+DELIMITER $$
+
+CALL stp_eliminarusuario('3');
+
+/*--Obtener Rol-*/
+DELIMITER $$
+CREATE PROCEDURE stp_obtener_rol ()
+BEGIN
+
+SELECT * FROM  tbl_rol  WHERE rol_estado ='A';
+
+END$$
+DELIMITER $$
+
+CALL stp_obtener_rol();
+
+
+
+/*--Modificar Perfil--*/
+DELIMITER $$
+CREATE PROCEDURE stp_modificarperfil (IN nombre VARCHAR(80), IN apellido VARCHAR(80), IN correo VARCHAR(80), IN password VARCHAR(80),
+                                     IN identificacion VARCHAR(13),IN telefono VARCHAR(15),IN direccion VARCHAR(200), IN idusuario INT)
+BEGIN
+
+UPDATE tbl_usuario SET usu_nombre=nombre,usu_apellido=apellido, usu_correo=correo,usu_password=password,usu_identificacion=identificacion,
+                       usu_telefono=telefono,usu_direccion=direccion 
+WHERE usu_estado='A' AND usu_id=idusuario;
+END$$
+DELIMITER $$
+
+CALL stp_modificarperfil('David','Heredia','dav@gmail.com','12345','17258518','0984047565','El conde','2');
+
+/*--Modificar Perfil sin correo--*/
+DELIMITER $$
+CREATE PROCEDURE stp_modificarperfil_nocorreo (IN nombre VARCHAR(80), IN apellido VARCHAR(80), IN password VARCHAR(80),
+                                     IN identificacion VARCHAR(13),IN telefono VARCHAR(15),IN direccion VARCHAR(200), IN idusuario INT)
+BEGIN
+
+UPDATE tbl_usuario SET usu_nombre=nombre,usu_apellido=apellido, usu_password=password,usu_identificacion=identificacion,
+                       usu_telefono=telefono,usu_direccion=direccion 
+WHERE usu_estado='A' AND usu_id=idusuario;
+END$$
+DELIMITER $$
+
+CALL stp_modificarperfil_nocorreo('David','Heredia','12345','17258518','0984047565','El conde','2');
+
+
 
 
 
