@@ -13,7 +13,7 @@
     <div class="error mx-auto" data-text="404">404</div>
     <p class="lead text-gray-800 mb-5">Página no encontrada</p>
     <p class="text-gray-500 mb-0">Hemos encontrado un problema al cargar tu página...</p>
-    <a href="login.php">&larr; Regresar al inicio</a>
+    <a href="home.php">&larr; Regresar al inicio</a>
   </div>
 
   <!-- Modal User -->

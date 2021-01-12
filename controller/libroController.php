@@ -118,7 +118,7 @@ class Libro
     function eliminarLibroAutor()
     {
         $con = Conexion();
-        $idLibro = $_POST['idLibro'];
+        $idLibro = desencriptar($_POST['idLibro']);
         $idAutor = $_POST['idAutor'];
 
         $sqlValidar = "CALL stp_validar_autorlibros('$idLibro')";
@@ -247,7 +247,7 @@ class Libro
             }
         }
     }
-    
+
     function obtenerAutor()
     {
         //INSTANCIO LA CONEXION BD

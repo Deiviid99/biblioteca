@@ -25,10 +25,38 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <!-- Basic Card Example -->
-                    <h1 class="m-0 font-weight-bold" style="text-align: center; color: #23395B;">BIENVENIDO/A AL SISTEMA</h1>
-                    <img src="<?php echo URL; ?>/template/img/libros.jpg" style="border-radius: 2rem;" alt="" width="100%">
 
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <div class="text-center">
+                                <h3 class="m-0 font-weight-bold">Bienvenido/a</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" src="<?php echo URL; ?>/template/img/primerlibro.png" style="border-radius: 2rem;" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="<?php echo URL; ?>/template/img/segundolibro.jpg" style="border-radius: 2rem;" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="<?php echo URL; ?>/template/img/tercerlibro.jpg" style="border-radius: 2rem;" alt="Third slide">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
 
                 </div>
                 <!-- /.container-fluid -->

@@ -53,7 +53,7 @@
             </div>
 
         <?php } else {
-            header("location: http://192.168.1.33:82/biblioteca/web/login.php");
+            header("location: http://192.168.1.33:82/biblioteca/view/login.php");
         } ?>
 
     </div>

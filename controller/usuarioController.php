@@ -165,6 +165,15 @@ class Usuario
             return $result;
         }
     }
+    function obtenerUsuarioPerfil($idUsuario)
+    {
+        $con = Conexion();
+        $sql = "SELECT * FROM tbl_usuario  WHERE usu_estado = 'A' AND usu_id ='$idUsuario'";
+        $result = mysqli_query($con, $sql);
+        if ($result) {
+            return $result;
+        }
+    }
 }
 /*---------------------LLAMADA DESDE LOS BOTONES PARA QUE EJECUTEN CRUD--------------------------------*/
 $usuario = new Usuario();
