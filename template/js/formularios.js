@@ -377,7 +377,6 @@ $(document).ready(function () {
         });
         return false;
     });
-
     //MODIFICAR USUARIOS
     $('#btnActualizarUsuario').click(function () {
         var datos = $('#frmModificarUsuario').serialize();
@@ -388,7 +387,7 @@ $(document).ready(function () {
             data: datos,
             success: function (data) {
                 if (data == "1") {
-                    alertify.alert("Información", "El registro se lo ha realizado, sin tomar en cuenta el correo, ya que se encuentra registrado en nuestro sistema.");
+                    alertify.alert("Información", "La actualización se la ha realizado, sin tomar en cuenta el correo, ya que se encuentra registrado en nuestro sistema.");
                     alertify.success("Actualización exitosa");
                     $("#modalModificarUsuario").modal('hide');
                     $('#tablaUsuario').load('http://192.168.1.33:82/biblioteca/view/tablausuario.php');
@@ -404,11 +403,40 @@ $(document).ready(function () {
                 else {
                     alertify.error("Error de actualización");
                 }
-
             }
         });
         return false;
     });
+
+    //ACTUALIZAR  PERFIL DE USUARIOS
+    $('#btnActualizarPerfil').click(function () {
+        var directorio = "http://192.168.1.33:82/biblioteca";
+        var datos = $('#frmModificarPerfilUsuario').serialize();
+        alertify.set('notifier', 'position', 'top-right');
+        $.ajax({
+            type: "POST",
+            url: "../controller/usuarioController.php?editperfil=usuario",
+            data: datos,
+            success: function (data) {
+                if (data == "1") {
+                    alertify.alert("Información", "La actualización se la ha realizado, sin tomar en cuenta el correo, ya que se encuentra registrado en nuestro sistema.", function () { window.location = directorio + "/view/perfil.php"; });
+                    alertify.success("Actualización exitosa");
+                } else if (data == "2") {
+                    alertify.success("Actualización exitosa");
+                    alertify.alert("Información", "La actualización se la ha realizado de manera correcta.", function () { window.location = directorio + "/view/perfil.php"; });
+                } else if (data == "3") {
+                    alertify.warning("No se pueden actualizar datos vacíos.");
+                }
+                else {
+                    alertify.error("Error de actualización");
+                }
+            }
+        });
+        return false;
+    });
+
+
+
 
 });
 

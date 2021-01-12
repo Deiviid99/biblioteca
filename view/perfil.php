@@ -41,36 +41,37 @@
                                         <div class="text-center">
                                             <h1 class="h4 text-gray-900 mb-4">Actualización de datos</h1>
                                         </div>
-                                        <form class="user" id="frmRegistroUsuario" method="POST">
+                                        <form class="user" id="frmModificarPerfilUsuario" method="POST">
                                             <?php
                                             $dato = new Usuario();
                                             $perfil = $dato->obtenerUsuarioPerfil($_SESSION['idUsuario']);
                                             while ($row = mysqli_fetch_array($perfil)) { ?>
+                                                <input type="hidden" name="txtIdUsuario" value="<?php echo encriptar($_SESSION['idUsuario']); ?>">
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="text" class="form-control form-control-user" id="exampleFirstName" name="txtNombre" placeholder="Nombres" value="<?php echo $row['USU_NOMBRE']; ?>">
+                                                        <input type="text" class="form-control form-control-user" id="txtNombre" name="txtNombre" placeholder="Nombres" value="<?php echo $row['USU_NOMBRE']; ?>">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <input type="text" class="form-control form-control-user" id="exampleLastName" name="txtApellido" placeholder="Apellidos" value="<?php echo $row['USU_APELLIDO']; ?>">
+                                                        <input type="text" class="form-control form-control-user" id="txtApellido" name="txtApellido" placeholder="Apellidos" value="<?php echo $row['USU_APELLIDO']; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="text" class="form-control form-control-user" id="exampleFirstName" name="txtIdentificacion" placeholder="Identificación" value="<?php echo $row['USU_IDENTIFICACION']; ?>">
+                                                        <input type="text" class="form-control form-control-user" id="txtIdentificacion" name="txtIdentificacion" placeholder="Identificación" value="<?php echo $row['USU_IDENTIFICACION']; ?>">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <input type="text" class="form-control form-control-user" id="exampleLastName" name="txtTelefono" placeholder="Teléfono" value="<?php echo $row['USU_TELEFONO']; ?>">
+                                                        <input type="text" class="form-control form-control-user" id="txtTelefono" name="txtTelefono" placeholder="Teléfono" value="<?php echo $row['USU_TELEFONO']; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-user" id="exampleInputEmail" name="txtDireccion" placeholder="Dirección" value="<?php echo $row['USU_DIRECCION']; ?>">
+                                                    <input type="text" class="form-control form-control-user" id="txtDireccion" name="txtDireccion" placeholder="Dirección" value="<?php echo $row['USU_DIRECCION']; ?>">
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="email" class="form-control form-control-user" id="exampleInputEmail" name="txtCorreo" placeholder="Correo electrónico" value="<?php echo $row['USU_CORREO']; ?>">
+                                                        <input type="email" class="form-control form-control-user" id="txtCorreo" name="txtCorreo" placeholder="Correo electrónico" value="<?php echo $row['USU_CORREO']; ?>">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" name="txtPassword" placeholder="Contraseña" value="<?php echo $row['USU_PASSWORD']; ?>">
+                                                        <input type="password" class="form-control form-control-user" id="txtPassword" name="txtPassword" placeholder="Contraseña" value="<?php echo $row['USU_PASSWORD']; ?>">
                                                     </div>
                                                 </div>
                                             <?php } ?>

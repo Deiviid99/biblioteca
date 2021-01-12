@@ -56,7 +56,7 @@ if (isset($_SESSION["rol"]) && $_SESSION["rol"] == 1) { ?>
                                 <td><?php echo $row['EDI_NOMBRE']; ?></td>
                                 <td style="text-align: left;">
                                     <?php
-                                    $autores = $dato->obtenerCatalogoAutor($idlibro);
+                                    $autores = $dato->obtenerCatalogoAutor(encriptar($idlibro));
                                     while ($dt = mysqli_fetch_array($autores)) { ?>
                                         <li><?php echo $dt['AUT_NOMBRE'] . ' ' . $dt['AUT_APELLIDO'];  ?></li>
                                     <?php } ?>
@@ -127,7 +127,7 @@ if (isset($_SESSION["rol"]) && $_SESSION["rol"] == 1) { ?>
                                 <td><?php echo $row['EDI_NOMBRE']; ?></td>
                                 <td style="text-align: left;">
                                     <?php
-                                    $autores = $dato->obtenerCatalogoAutor($idlibro);
+                                    $autores = $dato->obtenerCatalogoAutor(encriptar($idlibro));
                                     while ($dt = mysqli_fetch_array($autores)) { ?>
                                         <li><?php echo $dt['AUT_NOMBRE'] . ' ' . $dt['AUT_APELLIDO'];  ?></li>
                                     <?php } ?>

@@ -112,14 +112,14 @@ class Usuario
             $sql = "CALL stp_validarusuarios_registrocorreo('$correo')";
             $result = mysqli_query($con, $sql);
             $con->close();
-            while ($row = mysqli_fetch_array($result)) {
-                if ($row['USU_PASSWORD'] == $password) {
-                    $pass = $password;
-                } else {
-                    $pass = md5($password);
-                }
-            }
             if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_array($result)) {
+                    if ($row['USU_PASSWORD'] == $password) {
+                        $pass = $password;
+                    } else {
+                        $pass = md5($password);
+                    }
+                }
                 $con = Conexion();
                 $sqlRegistro = "UPDATE tbl_usuario SET rol_id='$rol',usu_nombre='$nombre',usu_apellido='$apellido', usu_password='$pass',usu_identificacion='$identificacion',
                 usu_telefono='$telefono',usu_direccion='$direccion' WHERE usu_estado='A' AND usu_id='$idUsuario'";
@@ -129,6 +129,18 @@ class Usuario
                     echo "1";
                 }
             } else {
+                //INSTANCIO LA CONEXION BD  
+                $con = Conexion();
+                $sqlValidar = "SELECT * FROM tbl_usuario WHERE usu_estado='A' AND usu_id='$idUsuario'";
+                $resultValidar = mysqli_query($con, $sqlValidar);
+                $con->close();
+                while ($dato = mysqli_fetch_array($resultValidar)) {
+                    if ($dato['USU_PASSWORD'] == $password) {
+                        $pass = $password;
+                    } else {
+                        $pass = md5($password);
+                    }
+                }
                 //INSTANCIO LA CONEXION BD  
                 $con = Conexion();
                 //EJECUTO PROCEDIMIENTO ALMACENADO
@@ -165,6 +177,7 @@ class Usuario
             return $result;
         }
     }
+
     function obtenerUsuarioPerfil($idUsuario)
     {
         $con = Conexion();
@@ -174,7 +187,73 @@ class Usuario
             return $result;
         }
     }
+
+    function modificarPerfil()
+    {
+        //INSTANCIO LA CONEXION BD
+        $con = Conexion();
+        //DECLARACION DE VARIABLES INICIALIZADAS POR CAMPOS DE TIPO POST
+        $idUsuario = desencriptar($_POST["txtIdUsuario"]);
+        $nombre = trim($_POST['txtNombre']);
+        $apellido = trim($_POST['txtApellido']);
+        $identificacion = trim($_POST['txtIdentificacion']);
+        $telefono = trim($_POST['txtTelefono']);
+        $direccion = trim($_POST['txtDireccion']);
+        $correo = trim($_POST['txtCorreo']);
+        $password = $_POST['txtPassword'];
+
+        if ($nombre == "" || $apellido == "" || $identificacion == "" || $telefono == "" || $direccion == "" || $correo == "" || $password == "") {
+            echo "3";
+        } else {
+            //EJECUTO PROCEDIMIENTO ALMACENADO
+            $sql = "CALL stp_validarusuarios_registrocorreo('$correo')";
+            $result = mysqli_query($con, $sql);
+            $con->close();
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_array($result)) {
+                    if ($row['USU_PASSWORD'] == $password) {
+                        $pass = $password;
+                    } else {
+                        $pass = md5($password);
+                    }
+                }
+                $con = Conexion();
+                $sqlRegistro = "UPDATE tbl_usuario SET usu_nombre='$nombre',usu_apellido='$apellido', usu_password='$pass',usu_identificacion='$identificacion',
+                usu_telefono='$telefono',usu_direccion='$direccion' WHERE usu_estado='A' AND usu_id='$idUsuario'";
+                $resultRegistro = mysqli_query($con, $sqlRegistro);
+                $con->close();
+                if ($resultRegistro) {
+                    echo "1";
+                }
+            } else {
+                //INSTANCIO LA CONEXION BD  
+                $con = Conexion();
+                $sqlValidar = "SELECT * FROM tbl_usuario WHERE usu_estado='A' AND usu_id='$idUsuario'";
+                $resultValidar = mysqli_query($con, $sqlValidar);
+                $con->close();
+                while ($dato = mysqli_fetch_array($resultValidar)) {
+                    if ($dato['USU_PASSWORD'] == $password) {
+                        $pass = $password;
+                    } else {
+                        $pass = md5($password);
+                    }
+                }
+                //INSTANCIO LA CONEXION BD  
+                $con = Conexion();
+                //EJECUTO PROCEDIMIENTO ALMACENADO
+                $sqlRegistro = "UPDATE tbl_usuario SET usu_nombre='$nombre',usu_apellido='$apellido', usu_correo='$correo',usu_password='$pass',usu_identificacion='$identificacion',
+                usu_telefono='$telefono',usu_direccion='$direccion' WHERE  usu_estado='A' AND usu_id='$idUsuario'";
+                $resultRegistro = mysqli_query($con, $sqlRegistro);
+                $con->close();
+                if ($resultRegistro) {
+                    echo "2";
+                }
+            }
+        }
+    }
 }
+
+
 /*---------------------LLAMADA DESDE LOS BOTONES PARA QUE EJECUTEN CRUD--------------------------------*/
 $usuario = new Usuario();
 //CAPTURAR LOS DATOS ENVIADOS METODO POST AJAX
@@ -186,4 +265,6 @@ if (isset($_GET['register'])) {
     $usuario->modificarUsuario();
 } else if (isset($_GET['delete'])) {
     $usuario->eliminarUsuario();
+} else if (isset($_GET['editperfil'])) {
+    $usuario->modificarPerfil();
 }
