@@ -28,10 +28,9 @@
 
                 <div class="container-fluid">
                     <?php
-                    $idLibro = $_GET['libro'];
                     $dato = new Libro();
-                    $catalogo = $dato->obtenerCatalogoLibro($idLibro);
-                    $catalogoautor = $dato->obtenerCatalogoAutor($idLibro);
+                    $catalogo = $dato->obtenerCatalogoLibro($_GET['libro']);
+                    $catalogoautor = $dato->obtenerCatalogoAutor($_GET['libro']);
                     ?>
                     <!-- Basic Card Example -->
                     <div class="card shadow mb-4">

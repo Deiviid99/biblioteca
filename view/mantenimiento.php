@@ -120,8 +120,8 @@ require_once("../controller/libroController.php");
     <div class="modal-dialog">
         <form method="POST" id="frmModificarLibro" enctype="multipart/form-data">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #F9F9F9;">
-                    <h6 class="modal-title" style="color: black; font-weight: bold;">Modificar Libro</h6>
+                <div class="modal-header">
+                    <h6 class="modal-title">Modificar Libro</h6>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -131,7 +131,7 @@ require_once("../controller/libroController.php");
                         <div class="col">
                             <label for="" style="font-weight: bold;">Editorial: </label>
                             <select class="form-control" name="cmbEditorialu" id="cmbEditorialu">
-                                <option value="0">Seleccione una editorial</option>
+                                <option value="0">Seleccione una editorial:</option>
                                 <?php
                                 $dato = new Libro();
                                 $editorial = $dato->obtenerEditorial();
@@ -145,21 +145,21 @@ require_once("../controller/libroController.php");
                         </div>
                         <div class="col">
                             <label for="" style="font-weight: bold;">ISBN: </label>
-                            <input type="text" class="form-control" name="txtIsbnu" id="txtIsbnu" />
+                            <input type="text" class="form-control" name="txtIsbnu" id="txtIsbnu" placeholder="Ingrese el ISBN del libro..." />
                             <div id="mensajeIsbnu" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                     </div>
                     <hr>
                     <div>
                         <label for="" style="font-weight: bold;">Título: </label>
-                        <input type="text" class="form-control" name="txtTitulou" id="txtTitulou" />
+                        <input type="text" class="form-control" name="txtTitulou" id="txtTitulou" placeholder="Ingrese el título del libro..." />
                         <div id="mensajeTitulou" style="color: #DE0F0F; font-size: 12px;"></div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col">
                             <label for="" style="font-weight: bold;">Año: </label>
-                            <input type="text" class="form-control" name="txtAniou" id="txtAniou" />
+                            <input type="text" class="form-control" name="txtAniou" id="txtAniou" placeholder="Ingrese el año del libro..." />
                             <div id="mensajeAniou" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                         <div class="col">
@@ -168,14 +168,14 @@ require_once("../controller/libroController.php");
                                 <div class="input-group-addon">
                                     $
                                 </div>
-                                <input type="text" class="form-control" name="txtPrecioVentau" id="txtPrecioVentau" />
+                                <input type="text" class="form-control" name="txtPrecioVentau" id="txtPrecioVentau" placeholder="0.00" />
                             </div>
                             <div id="mensajePVPu" style="color: #DE0F0F; font-size: 12px;"></div>
                         </div>
                     </div>
                     <hr>
                     <div class="form-group">
-                        <label for="" style="font-weight: bold;">Autor: </label>
+                        <label for="" style="font-weight: bold;">Autor(es): </label>
                         <br>
                         <select class="form-control" name="cmbAutoresu" id="cmbAutoresu">
                             <?php
@@ -188,7 +188,7 @@ require_once("../controller/libroController.php");
                         <div id="mensajeAutoru" style="color: #DE0F0F; font-size: 12px;"></div>
                     </div>
                 </div>
-                <div class="modal-footer" style="background-color: #F9F9F9;">
+                <div class="modal-footer">
                     <button type="button" class="btn btn-outline-success" data-dismiss="modal" name="btnActualizarLibro" id="btnActualizarLibro">Actualizar <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" />
                             <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />

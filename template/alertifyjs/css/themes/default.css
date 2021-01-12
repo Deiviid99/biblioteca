@@ -10,9 +10,9 @@
   border-radius: 2px;
 }
 .alertify .ajs-header {
-  color: black;
+  color: white;
   font-weight: bold;
-  background: #fafafa;
+  background: #23395b;
   border-bottom: #eee 1px solid;
   border-radius: 2px 2px 0 0;
 }
@@ -37,15 +37,34 @@
 }
 .alertify .ajs-footer .ajs-buttons .ajs-button {
   background-color: transparent;
-  color: #000;
-  border: 0;
+  color: #fff;
+  border: 1px solid;
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
+  border-radius: 2rem;
+}
+.alertify .ajs-footer .ajs-buttons .ajs-button:hover {
+  background-color: #fff;
+  color: #000000;
+  border: 1px solid #fff;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 2rem;
 }
 .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
-  color: #3593D2;
+  color: #1cc88a;
+  border: 1px solid;
+  border-radius: 2rem;
 }
+.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok:hover {
+  color: white;
+  background-color: #1cc88a;
+  border: 1px solid #1cc88a;
+  border-radius: 2rem;
+}
+
 .alertify-notifier .ajs-message {
   background: rgba(255, 255, 255, 0.95);
   color: #000;

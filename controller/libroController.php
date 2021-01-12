@@ -282,8 +282,9 @@ class Libro
         }
     }
 
-    function obtenerCatalogoLibro($idLibro)
+    function obtenerCatalogoLibro($id)
     {
+        $idLibro = desencriptar($id);
         $con = Conexion();
         $sql = "CALL stp_obtenercatalogo_libro('$idLibro')";
         $result = mysqli_query($con, $sql);
@@ -292,8 +293,9 @@ class Libro
         }
     }
 
-    function obtenerCatalogoAutor($idLibro)
+    function obtenerCatalogoAutor($id)
     {
+        $idLibro = desencriptar($id);
         $con = Conexion();
         $sql = "CALL stp_obtenercatalogo_autor('$idLibro')";
         $result = mysqli_query($con, $sql);

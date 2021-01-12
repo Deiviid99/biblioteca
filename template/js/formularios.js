@@ -194,7 +194,7 @@ $(document).ready(function () {
 
     //CARGAR LA SELECCION DE AUTORES AL MULTISELECT
     $('#cmbAutores').multiselect({
-        nonSelectedText: 'Seleccione autor(es)',
+        nonSelectedText: 'Seleccione autor(es):',
         enableFiltering: true,
         enableCaseInsensitiveFiltering: true,
         includeSelectAllOption: true,

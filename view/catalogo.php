@@ -59,7 +59,7 @@
                                                 <td><?php echo $row['LIB_ISBN']; ?></td>
                                                 <td><?php echo $row['LIB_TITULO'] ?></td>
                                                 <td>
-                                                    <a href="catalogolibro.php?libro=<?php echo $row['LIB_ID'] ?>"><button type="button" class="btn btn-outline-warning">
+                                                    <a href="catalogolibro.php?libro=<?php echo encriptar($row['LIB_ID']) ?>"><button type="button" class="btn btn-outline-warning">
                                                             <img src="../template/img/librotable.png" style="width: 30px; height: 32px;" alt="">
                                                         </button></a>
                                                 </td>
